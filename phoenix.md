@@ -6,6 +6,9 @@ updated: 2020-12-29
 weight: -1
 ---
 
+Intro
+-------------------------------------
+
 ### Creating a project
 
 ```shell
@@ -25,7 +28,8 @@ mix phx.new my_app
 | `--install` | will fetch and install dependencies (including npm js) |
 | `--no-install` | |
 
-## Generators
+Generators
+-------------------------------------
 
 ### migration
 
@@ -49,7 +53,7 @@ mix ecto.gen.migration add_posts_table
 mix phx.gen.schema Blog.Post blog_posts title:string views:integer
 ```
 
-This generates:
+This command will create the following files:
 
 - a *schema file* in `lib/my_app/blog/post.ex`, with a `blog_posts` table
 - a *migration file* (use `--no-migration` to skip this)
@@ -77,7 +81,9 @@ This generates:
 - `:datetime` - An alias for `:naive_datetime`
 
 `user_id:references:users` will result in a migration with an `:integer` column of `:user_id` and create an index.
+
 `tags:array:string` will create an array type if the database supports it.
+
 Unique columns can be generated with `title:unique` or `unique_int:integer:unique`
 
 #### Options
@@ -93,7 +99,7 @@ Unique columns can be generated with `title:unique` or `unique_int:integer:uniqu
 mix phx.gen.context Accounts User users name:string age:integer
 ```
 
-This generates:
+This command will create the following files:
 
 - a context module in `accounts.ex`
 - a schema file in `accounts/user.ex`, with a `users` table
@@ -113,7 +119,7 @@ This generates:
 mix phx.gen.html Accounts User users name:string age:integer
 ```
 
-This generates:
+This command will create the following files:
 
 - a context module in `lib/app/accounts.ex` for the accounts API
 - a schema file in `lib/app/accounts/user.ex`, with an users table
@@ -134,7 +140,7 @@ This generates:
 mix phx.gen.json Accounts User users name:string age:integer
 ```
 
-This generates:
+This command will create the following files:
 
 - a context module in `lib/app/accounts.ex` for the accounts API
 - a schema file in `lib/app/accounts/user.ex`, with an users table
@@ -154,7 +160,7 @@ This generates:
 mix phx.gen.live Accounts User users name:string age:integer
 ```
 
-This generates:
+This command will create the following files:
 
 - a context module in `lib/app/accounts.ex` for the accounts API
 - a schema file in `lib/app/accounts/user.ex`, with an users table
@@ -171,7 +177,9 @@ This generates:
 | `--no-schema` | |
 
 Resources
----
+-------------------------------------
+
+### Blog posts
 
 - [Bootstrap native with Phoneix](https://dashbit.co/blog/using-bootstrap-native-with-live-view)
 - [Optimizing User Experience with LiveView](https://dockyard.com/blog/2020/12/21/optimizing-user-experience-with-liveview)
