@@ -40,7 +40,9 @@
 
           <ul class='related-post-list'>
             {% for page in category_pages limit: 6 %}
-              {% include 2017/related-posts-item.html page=page class='item related-post-item' %}
+              {% if page.title and page.title != 404 %}
+                {% include 2017/related-posts-item.html page=page class='item related-post-item' %}
+              {% endif %}
             {% endfor %}
           </ul>
         </div>
@@ -52,7 +54,9 @@
 
           <ul class='related-post-list'>
             {% for page in top_pages limit: 6 %}
-              {% include 2017/related-posts-item.html page=page class='item related-post-item' %}
+              {% if page.title and page.title != '404' %}
+                {% include 2017/related-posts-item.html page=page class='item related-post-item' %}
+              {% endif %}
             {% endfor %}
           </ul>
         </div>
