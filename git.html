@@ -23,25 +23,25 @@
 <meta charset='utf-8'>
 <meta content='width=device-width, initial-scale=1.0' name='viewport'>
 <link href='./assets/favicon.png' rel='shortcut icon'>
-<meta content='/postgresql.html' name='app:pageurl'>
+<meta content='/git.html' name='app:pageurl'>
 
 
-  <title>PostgreSQL cheatsheet</title>
-  <meta content='PostgreSQL cheatsheet' property='og:title'>
-  <meta content='PostgreSQL cheatsheet' property='twitter:title'>
+  <title>Git cheatsheet</title>
+  <meta content='Git cheatsheet' property='og:title'>
+  <meta content='Git cheatsheet' property='twitter:title'>
   <meta content='article' property='og:type'>
 
 
 
 
 
-  <meta content="The one-page guide to PostgreSQL: usage, examples, links, snippets, and more." name="description">
-  <meta content="The one-page guide to PostgreSQL: usage, examples, links, snippets, and more." property="og:description">
-  <meta content="The one-page guide to PostgreSQL: usage, examples, links, snippets, and more." property="twitter:description">
+  <meta content="The one-page guide to Git: usage, examples, links, snippets, and more." name="description">
+  <meta content="The one-page guide to Git: usage, examples, links, snippets, and more." property="og:description">
+  <meta content="The one-page guide to Git: usage, examples, links, snippets, and more." property="twitter:description">
 
 
-<link rel="canonical" href="https://devhints.io/postgresql">
-<meta name="og:url" content="https://devhints.io/postgresql">
+<link rel="canonical" href="https://devhints.io/git">
+<meta name="og:url" content="https://devhints.io/git">
 
 
 
@@ -57,7 +57,7 @@
 
 
 
-  <meta content='Databases' property='article:section'>
+  <meta content='Tools' property='article:section'>
 
 
 
@@ -106,9 +106,9 @@
     "@type": "WebPage",
     "@id": "https://google.com/article"
   },
-  "headline": "PostgreSQL cheatsheet",
+  "headline": "Git cheatsheet",
   "image": [ null ],
-  "description": "The one-page guide to PostgreSQL: usage, examples, links, snippets, and more."
+  "description": "The one-page guide to Git: usage, examples, links, snippets, and more."
 }
 </script>
 <script type='application/ld+json'>
@@ -119,15 +119,15 @@
     "@type": "ListItem",
     "position": 1,
     "item": {
-      "@id": "https://devhints.io/#databases",
-      "name": "Databases"
+      "@id": "https://devhints.io/#tools",
+      "name": "Tools"
     }
   },{
     "@type": "ListItem",
     "position": 2,
     "item": {
-      "@id": "https://devhints.io/postgresql",
-      "name": "PostgreSQL"
+      "@id": "https://devhints.io/git",
+      "name": "Git"
     }
   }]
 }
@@ -157,7 +157,7 @@
         
           <ul class='page-actions'>
             <li class='link github -button hint--bottom' data-hint='Edit this page on GitHub'>
-              <a href='https://github.com/ricmarinovic/library/blob/master/postgresql.md'>
+              <a href='https://github.com/ricmarinovic/library/blob/master/git.md'>
                 <span class='text -visible'>Edit</span>
               </a>
             </li>
@@ -171,7 +171,7 @@
 
 <div class='body-area'>
   <header class='main-heading -center' role='banner'>
-    <h1 class='h1'>PostgreSQL <em>cheatsheet</em></h1>
+    <h1 class='h1'>Git <em>cheatsheet</em></h1>
 
     <div class='pubbox' data-js-no-preview>
       
@@ -180,7 +180,7 @@
 
   
     <aside class='notice-box'>
-      This page is a work in progress. You can help by <a href='https://github.com/ricmarinovic/library/blob/master/postgresql.md'>suggesting edits</a>!
+      This page is a work in progress. You can help by <a href='https://github.com/ricmarinovic/library/blob/master/git.md'>suggesting edits</a>!
     </aside>
   
 
@@ -191,377 +191,7 @@
   <main class='post-content MarkdownBody' data-js-main-body data-js-anchors role='main'>
     <h2 id="intro">Intro</h2>
 
-<ul>
-  <li>Login to <code>postgres</code> user account as superuser: <code>sudo -iu postgres</code></li>
-  <li>Access the prompt with <code>psql</code>.</li>
-  <li>You can do it all in one step with <code>sudo -u postgres psql</code>.</li>
-  <li>Connect to a different database with <code>psql -d &lt;database name&gt;</code>.</li>
-</ul>
-
-<h3 id="psql-commands">psql commands</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Command</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>\q</code></td>
-      <td>Quit</td>
-    </tr>
-    <tr>
-      <td><code>\l</code></td>
-      <td>List databases</td>
-    </tr>
-    <tr>
-      <td><code>\du</code></td>
-      <td>List all roles</td>
-    </tr>
-    <tr>
-      <td><code>\dt</code></td>
-      <td>List all tables</td>
-    </tr>
-    <tr>
-      <td><code>\dn</code></td>
-      <td>List all schemas</td>
-    </tr>
-    <tr>
-      <td><code>\d table_name</code></td>
-      <td>Details table</td>
-    </tr>
-    <tr>
-      <td><code>\i file</code></td>
-      <td>Run file</td>
-    </tr>
-    <tr>
-      <td><code>\c</code></td>
-      <td>Connect to new database</td>
-    </tr>
-    <tr>
-      <td><code>\conninfo</code></td>
-      <td>Current connection info</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="creating-new-role">Creating new Role</h3>
-
-<pre class="-setup"><code class="language-shell">sudo -iu postgres
-</code></pre>
-
-<pre><code class="language-shell">createuser --interactive --pwprompt
-</code></pre>
-
-<h3 id="changing-password">Changing password</h3>
-
-<pre><code class="language-sql">ALTER USER user_name
-WITH PASSWORD 'new_password';
-</code></pre>
-
-<h2 id="databases">Databases</h2>
-
-<h3 id="creating">Creating</h3>
-
-<pre class="-setup"><code class="language-shell">sudo -iu postgres
-</code></pre>
-
-<pre><code class="language-shell">createdb rkma
-</code></pre>
-
-<h3 id="dropping">Dropping</h3>
-
-<pre class="-setup"><code class="language-shell">sudo -iu postgres
-</code></pre>
-
-<pre><code class="language-shell">dropdb rkma
-</code></pre>
-
-<p>Or</p>
-
-<pre class="-setup"><code class="language-shell">sudo -u postgres psql
-</code></pre>
-
-<pre><code class="language-sql">DROP DATABASE IF EXISTS &lt;name&gt;;
-</code></pre>
-
-<h2 id="tables">Tables</h2>
-
-<h3 id="creating-1">Creating</h3>
-
-<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS &lt;table&gt; (
-    &lt;column&gt; &lt;data_type&gt; &lt;TableConstraint&gt; DEFAULT &lt;default_value&gt;,
-    &lt;another_column&gt; &lt;data_type&gt; &lt;TableConstraint&gt; DEFAULT &lt;default_value&gt;,
-    foreign key (&lt;column&gt;) references &lt;table&gt;(&lt;column&gt;)
-)
-</code></pre>
-
-<h4 id="examples">Examples</h4>
-
-<pre><code class="language-sql">CREATE TABLE movies (
-    id INTEGER PRIMARY KEY,
-    title TEXT,
-    director TEXT,
-    year INTEGER,
-    length_minutes INTEGER
-);
-
-create table master_plan(
-    id serial primary key,
-    the_date date,
-    title varchar(100),
-    description text
-);
-</code></pre>
-
-<h3 id="data-types">Data types</h3>
-
-<p class="-crosslink"><a href="https://www.postgresql.org/docs/9.5/datatype.html">List of data types</a></p>
-
-<h3 id="constraints">Constraints</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Constraint</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>PRIMARY KEY</code></td>
-      <td>Used to identify a single row in the table</td>
-    </tr>
-    <tr>
-      <td><code>UNIQUE</code></td>
-      <td>This means that the values in this column have to be unique, so you can’t insert another row with the same value in this column as another row in the table</td>
-    </tr>
-    <tr>
-      <td><code>NOT NULL</code></td>
-      <td>This means that the inserted value can not be <code>NULL</code></td>
-    </tr>
-    <tr>
-      <td><code>FOREIGN KEY</code></td>
-      <td>This is a consistency check which ensures that each value in this column corresponds to another value in a column in another table</td>
-    </tr>
-    <tr>
-      <td><code>CHECK (expression)</code></td>
-      <td>This is allows you to run a more complex expression to test whether the values inserted are valid</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>See: <a href="https://www.postgresql.org/docs/9.4/ddl-constraints.html">Constraints</a></p>
-
-<h3 id="dropping-1">Dropping</h3>
-
-<pre><code class="language-sql">DROP TABLE IF EXISTS &lt;table_name&gt;;
-</code></pre>
-
-<h3 id="renaming-table">Renaming table</h3>
-
-<pre><code class="language-sql">ALTER TABLE &lt;table_name&gt; RENAME TO &lt;new_table_name&gt;;
-</code></pre>
-
-<p>See: <a href="https://www.postgresql.org/docs/9.4/sql-altertable.html">ALTER TABLE</a></p>
-
-<h2 id="altering-tables">Altering tables</h2>
-
-<h3 id="adding-columns">Adding columns</h3>
-
-<pre><code class="language-sql">ALTER TABLE &lt;table name&gt;
-ADD &lt;column_name&gt; &lt;data_type&gt; &lt;optional_table_constraint&gt;
-    DEFAULT &lt;default_value&gt;;
-</code></pre>
-
-<p>See: <a href="https://www.postgresql.org/docs/9.4/sql-altertable.html">ALTER TABLE</a></p>
-
-<h3 id="removing-columns">Removing columns</h3>
-
-<pre><code class="language-sql">ALTER TABLE &lt;table_name&gt; DROP &lt;column_name&gt;;
-</code></pre>
-
-<p>See: <a href="https://www.postgresql.org/docs/9.4/sql-altertable.html">ALTER TABLE</a></p>
-
-<h3 id="renaming-columns">Renaming columns</h3>
-
-<pre><code class="language-sql">ALTER TABLE table
-RENAME COLUMN &lt;column_name&gt; TO &lt;new_column_name&gt;;
-</code></pre>
-
-<p>See: <a href="https://www.postgresql.org/docs/9.4/sql-altertable.html">ALTER TABLE</a></p>
-
-<h3 id="foreign-key">Foreign Key</h3>
-
-<pre><code class="language-sql">ALTER TABLE &lt;table_name&gt;
-ADD FOREIGN KEY (&lt;column id&gt;) REFERENCES lojas(id);
-</code></pre>
-
-<p>See: <a href="https://www.postgresql.org/docs/9.4/sql-altertable.html">ALTER TABLE</a></p>
-
-<h2 id="values">Values</h2>
-
-<h3 id="insert">Insert</h3>
-
-<pre><code class="language-sql">INSERT INTO table
-(column1, column2)
-VALUES
-(value1, value2)
-(value1, value2);
-</code></pre>
-
-<h3 id="update">Update</h3>
-
-<pre><code class="language-sql">UPDATE table
-SET column1 = new_value1, column2 = new_value2
-WHERE &lt;condition&gt;;
-</code></pre>
-
-<p><strong>Do not forget the where condition!</strong></p>
-
-<h3 id="delete">Delete</h3>
-
-<pre><code class="language-sql">DELETE FROM &lt;table name&gt;
-WHERE &lt;condition&gt;;
-</code></pre>
-
-<p><strong>Do not forget the where condition!</strong></p>
-
-<h2 id="queries">Queries</h2>
-
-<p>Queries run in this order:</p>
-
-<ul>
-  <li>FROM + JOIN</li>
-  <li>WHERE</li>
-  <li>GROUP BY</li>
-  <li>HAVING</li>
-  <li>SELECT + DISTINCT (window functions)</li>
-  <li>ORDER BY</li>
-  <li>LIMIT</li>
-</ul>
-
-<h3 id="filtering">Filtering</h3>
-
-<pre><code class="language-sql">SELECT &lt;column_name&gt;
-FROM &lt;table_name&gt;
-WHERE condition1 AND condition2 OR condition3
-</code></pre>
-
-<h3 class="-one-column" id="filter-operators">Filter operators</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Operator</th>
-      <th>Condition</th>
-      <th>SQL example</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>=, !=, &lt; &lt;=, &gt;, &gt;=</td>
-      <td>Standard numerical operators</td>
-      <td>col_name != 4</td>
-    </tr>
-    <tr>
-      <td>BETWEEN … AND …</td>
-      <td>Number is within range of two values (inclusive)</td>
-      <td>col_name BETWEEN 1.5 AND 10.5</td>
-    </tr>
-    <tr>
-      <td>NOT BETWEEN … AND …</td>
-      <td>Number is not within range of two values (inclusive)</td>
-      <td>col_name NOT BETWEEN 1 AND 10</td>
-    </tr>
-    <tr>
-      <td>IN (…)</td>
-      <td>Number exists in a list</td>
-      <td>col_name IN (2, 4, 6)</td>
-    </tr>
-    <tr>
-      <td>NOT IN (…)</td>
-      <td>Number does not exist in a list</td>
-      <td>col_name NOT IN (1, 3, 5)</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>When working with text data the following operators are supported:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Operator</th>
-      <th>Condition</th>
-      <th>SQL example</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>=</td>
-      <td>Case sensitive exact string comparison (<em>notice the single equals</em>)</td>
-      <td>col_name = “abc”</td>
-    </tr>
-    <tr>
-      <td>!= or &lt;&gt;</td>
-      <td>Case sensitive exact string inequality comparison</td>
-      <td>col_name != “abcd”</td>
-    </tr>
-    <tr>
-      <td>LIKE</td>
-      <td>Case insensitive exact string comparison</td>
-      <td>col_name LIKE “ABC”</td>
-    </tr>
-    <tr>
-      <td>NOT LIKE</td>
-      <td>Case insensitive exact string inequality comparison</td>
-      <td>col_name NOT LIKE “ABCD”</td>
-    </tr>
-    <tr>
-      <td>%</td>
-      <td>Used anywhere in a string to match a sequence of zero or more characters (only with LIKE or NOT LIKE)</td>
-      <td>col_name LIKE “%AT%”<br />(matches “AT”, “ATTIC”, “CAT” or even “BATS”)</td>
-    </tr>
-    <tr>
-      <td>_</td>
-      <td>Used anywhere in a string to match a single character (only with LIKE or NOT LIKE)</td>
-      <td>col_name LIKE “AN_“<br />(matches “AND”, but not “AN”)</td>
-    </tr>
-    <tr>
-      <td>IN (…)</td>
-      <td>String exists in a list</td>
-      <td>col_name IN (“A”, “B”, “C”)</td>
-    </tr>
-    <tr>
-      <td>NOT IN (…)</td>
-      <td>String does not exist in a list</td>
-      <td>col_name NOT IN (“D”, “E”, “F”)</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="sorting">Sorting</h3>
-
-<pre><code class="language-sql">SELECT DISTINCT column
-FROM table
-WHERE condition
-ORDER BY column ASC/DESC
-LIMIT n OFFSET m;
-</code></pre>
-
-<h3 id="multi-table-queries">Multi table queries</h3>
-
-<pre><code class="language-sql">SELECT column, another_table_column
-FROM table
-INNER JOIN another_table ON table.at_id = another_table.id;
-</code></pre>
-
-<p>Possible joins: <code>LEFT</code>, <code>RIGHT</code>, <code>FULL</code>.</p>
-
-<p>See also: <a href="https://blog.jooq.org/2016/07/05/say-no-to-venn-diagrams-when-explaining-joins/">Say no to Venn Diagrams on Join</a></p>
+<p>Git</p>
 
   </main>
 </div>
@@ -625,7 +255,7 @@ INNER JOIN another_table ON table.at_id = another_table.id;
       <div class='group'>
         <div class='related-posts-group'>
           
-            <h3>Other Databases cheatsheets</h3>
+            <h3>Other Tools cheatsheets</h3>
           
 
           <ul class='related-post-list'>
@@ -639,22 +269,6 @@ INNER JOIN another_table ON table.at_id = another_table.id;
           <h3>Top cheatsheets</h3>
 
           <ul class='related-post-list'>
-            
-              
-                <li class='item related-post-item'>
-  <a href='./git'>
-    <strong>Git</strong>
-    <span>
-      cheatsheet
-
-      
-      <abbr class='attribute-peg -new-layout hint--bottom' data-hint='New layout!'><span></span></abbr>
-      
-    </span>
-  </a>
-</li>
-
-              
             
               
                 <li class='item related-post-item'>
@@ -724,6 +338,22 @@ INNER JOIN another_table ON table.at_id = another_table.id;
                 <li class='item related-post-item'>
   <a href='./phoenix'>
     <strong>Phoenix framework</strong>
+    <span>
+      cheatsheet
+
+      
+      <abbr class='attribute-peg -new-layout hint--bottom' data-hint='New layout!'><span></span></abbr>
+      
+    </span>
+  </a>
+</li>
+
+              
+            
+              
+                <li class='item related-post-item'>
+  <a href='./postgresql'>
+    <strong>PostgreSQL</strong>
     <span>
       cheatsheet
 
