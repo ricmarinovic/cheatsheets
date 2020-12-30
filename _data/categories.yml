@@ -1,10 +1,11 @@
 enabled: true
 names:
-  # - C-like
+  - C-like
   # - CLI
   - Databases
   # - Devops
   - Elixir
   - Ruby
+  - Rust
   - Tools
   - Others
