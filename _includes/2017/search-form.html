@@ -6,6 +6,7 @@
     <span class='sep'>/</span>
     <input name='q'
       type='text'
+      autocomplete="off"
       {% if include.live %}
         {% assign placeholder = site.data.content.search_form.home_placeholder | replace: "%{size}", size %}
         autofocus data-js-search-input

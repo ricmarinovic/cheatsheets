@@ -1,13 +1,13 @@
 enabled: true
 names:
-  - C-like
-  - CLI
+  # - C-like
+  # - CLI
   - Databases
-  - Devops
+  # - Devops
   - Elixir
-  - Git
-  - Markup
-  - Rails
-  - Ruby
-  - Ruby libraries
+  # - Git
+  # - Markup
+  # - Rails
+  # - Ruby
+  # - Ruby libraries
   - Others

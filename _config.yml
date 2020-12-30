@@ -47,7 +47,7 @@ defaults:
       path: ""
       type: pages
     values:
-      layout: "default"
+      layout: "2017/sheet"
       og_type: article
       type: article
       category: "Others"
@@ -62,4 +62,4 @@ title: Devhints.io cheatsheets
 # GitHub metadata
 # https://help.github.com/articles/repository-metadata-on-github-pages/
 
-repository: ricmarinovic/cheatsheets
+repository: ricmarinovic/library
