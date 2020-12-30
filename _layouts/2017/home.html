@@ -12,7 +12,7 @@
 
 </head><body class='UseCompactHeader HighlightPubFirstLine'>
 
-{% include 2017/top-nav.html page=page is_home=true noedit=true noback=true %}
+{% include 2017/top-nav.html page=page is_home=true noedit=true noback="true" %}
 
 <div class='body-area -slim'>
   <div class='site-header' role='banner'>
@@ -42,7 +42,7 @@
     </h2>
 
     {% for page in recent_pages reversed %}
-      {% if forloop.index <= 18 %}
+      {% if forloop.index <= 10 %}
         {% include 2017/pages-list-item.html page=page class='article item' %}
       {% endif %}
     {% endfor %}
@@ -62,12 +62,12 @@
       {% endfor %}
     {% endfor %}
 
-    <div class='message item missing-message'>
+    <!-- <div class='message item missing-message'>
       <h3>See something missing?</h3>
       <p>
         <a class='push-button' href='{{ site.github.repository_url }}/issues/907'>Request cheatsheet</a>
       </p>
-    </div>
+    </div> -->
   </div>
 </div>
 
