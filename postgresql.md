@@ -2,6 +2,7 @@
 title: PostgreSQL
 category: Databases
 tags: [Featured, WIP]
+prism_languages: [sql]
 updated: 2020-12-29
 weight: -1
 ---
@@ -334,12 +335,55 @@ Subqueries
 -------------------------------------
 {: .-one-column}
 
-![Subqueries](https://pbs.twimg.com/media/EGCeRwfX0AAb9pP?format=jpg&name=large)
+There are a lot of questions you can't answer with one simple SQL query, for example when you need to `GROUP BY` two different columns. Solution: put more queries in your query!
+
+Here's an example of comparing common cat names and dog names by doing two `GROUP BY`s:
+
+```sql
+WITH dog_counts AS (
+    SELECT name, count(*) as dogs_with_name
+    FROM dogs GROUP BY 1
+),
+cat_counts AS (
+    SELECT name, count(*) as cats_with_name
+    FROM cats GROUP BY 1
+)
+SELECT dog_counts.name, dogs_with_name, cats_with_name
+FROM cat_counts FULL OUTER JOIN dog_counts USING (name)
+ORDER BY dogs_with_name
+```
+
+These queries-inside-queries are called subqueries and here are a few places you can put them:
+
+In a `WITH` statement before the query:
+
+```sql
+WITH table1 as (<subquery>),
+table2 as (<subquery>)
+SELECT ... FROM table1 LEFT JOIN table2 ...
+```
+
+Inline in a `FROM`:
+
+```sql
+SELECT ...
+FROM (<subquery>)
+GROUP BY ...
+```
+
+In a `WHERE` (the subquery has to return just 1 column here):
+
+```sql
+SELECT ...
+FROM table
+WHERE name IN (<subquery>)
+```
+
 
 Materialized Views
 -------------------------------------
 
-[Reference](https://medium.com/@rebo_dood/the-benefits-of-materialized-views-and-how-to-use-them-in-your-ruby-on-rails-project-4ac1b5432881)
+See: [The Benefits of Materialized Views (and how to use them in your Ruby on Rails project)](https://medium.com/@rebo_dood/the-benefits-of-materialized-views-and-how-to-use-them-in-your-ruby-on-rails-project-4ac1b5432881)
 
 
 Common queries
