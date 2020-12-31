@@ -23,25 +23,25 @@
 <meta charset='utf-8'>
 <meta content='width=device-width, initial-scale=1.0' name='viewport'>
 <link href='./assets/favicon.png' rel='shortcut icon'>
-<meta content='/phoenix.html' name='app:pageurl'>
+<meta content='/docker.html' name='app:pageurl'>
 
 
-  <title>Phoenix framework cheatsheet</title>
-  <meta content='Phoenix framework cheatsheet' property='og:title'>
-  <meta content='Phoenix framework cheatsheet' property='twitter:title'>
+  <title>Docker cheatsheet</title>
+  <meta content='Docker cheatsheet' property='og:title'>
+  <meta content='Docker cheatsheet' property='twitter:title'>
   <meta content='article' property='og:type'>
 
 
 
 
 
-  <meta content="The one-page guide to Phoenix framework: usage, examples, links, snippets, and more." name="description">
-  <meta content="The one-page guide to Phoenix framework: usage, examples, links, snippets, and more." property="og:description">
-  <meta content="The one-page guide to Phoenix framework: usage, examples, links, snippets, and more." property="twitter:description">
+  <meta content="The one-page guide to Docker: usage, examples, links, snippets, and more." name="description">
+  <meta content="The one-page guide to Docker: usage, examples, links, snippets, and more." property="og:description">
+  <meta content="The one-page guide to Docker: usage, examples, links, snippets, and more." property="twitter:description">
 
 
-<link rel="canonical" href="https://devhints.io/phoenix">
-<meta name="og:url" content="https://devhints.io/phoenix">
+<link rel="canonical" href="https://devhints.io/docker">
+<meta name="og:url" content="https://devhints.io/docker">
 
 
 
@@ -57,12 +57,10 @@
 
 
 
-  <meta content='Elixir' property='article:section'>
+  <meta content='Tools' property='article:section'>
 
 
 
-
-  <meta content='Featured' property='article:tag'>
 
   <meta content='WIP' property='article:tag'>
 
@@ -106,9 +104,9 @@
     "@type": "WebPage",
     "@id": "https://google.com/article"
   },
-  "headline": "Phoenix framework cheatsheet",
+  "headline": "Docker cheatsheet",
   "image": [ null ],
-  "description": "The one-page guide to Phoenix framework: usage, examples, links, snippets, and more."
+  "description": "The one-page guide to Docker: usage, examples, links, snippets, and more."
 }
 </script>
 <script type='application/ld+json'>
@@ -119,15 +117,15 @@
     "@type": "ListItem",
     "position": 1,
     "item": {
-      "@id": "https://devhints.io/#elixir",
-      "name": "Elixir"
+      "@id": "https://devhints.io/#tools",
+      "name": "Tools"
     }
   },{
     "@type": "ListItem",
     "position": 2,
     "item": {
-      "@id": "https://devhints.io/phoenix",
-      "name": "Phoenix framework"
+      "@id": "https://devhints.io/docker",
+      "name": "Docker"
     }
   }]
 }
@@ -157,7 +155,7 @@
         
           <ul class='page-actions'>
             <li class='link github -button hint--bottom' data-hint='Edit this page on GitHub'>
-              <a href='https://github.com/ricmarinovic/library/blob/master/phoenix.md'>
+              <a href='https://github.com/ricmarinovic/library/blob/master/docker.md'>
                 <span class='text -visible'>Edit</span>
               </a>
             </li>
@@ -171,7 +169,7 @@
 
 <div class='body-area'>
   <header class='main-heading -center' role='banner'>
-    <h1 class='h1'>Phoenix framework <em>cheatsheet</em></h1>
+    <h1 class='h1'>Docker <em>cheatsheet</em></h1>
 
     <div class='pubbox' data-js-no-preview>
       
@@ -180,7 +178,7 @@
 
   
     <aside class='notice-box'>
-      This page is a work in progress. You can help by <a href='https://github.com/ricmarinovic/library/blob/master/phoenix.md'>suggesting edits</a>!
+      This page is a work in progress. You can help by <a href='https://github.com/ricmarinovic/library/blob/master/docker.md'>suggesting edits</a>!
     </aside>
   
 
@@ -191,258 +189,30 @@
   <main class='post-content MarkdownBody' data-js-main-body data-js-anchors role='main'>
     <h2 id="intro">Intro</h2>
 
-<h3 id="creating-a-project">Creating a project</h3>
+<p>Running a container from an image:</p>
 
-<pre><code class="language-shell"># mix phx.new &lt;name&gt;
-mix phx.new my_app
+<pre><code class="language-shell">docker run &lt;image name&gt; &lt;command&gt;
 </code></pre>
+
+<p>where <code>&lt;command&gt;</code> optionally overrides the default command defined on the image.</p>
 
 <h4 id="options">Options</h4>
 
-<table>
-  <tbody>
-    <tr>
-      <td><code>--live</code></td>
-      <td>include LiveView</td>
-    </tr>
-    <tr>
-      <td><code>--database</code></td>
-      <td>possible values are: <code>postgres</code>, <code>mysql</code>, <code>mssql</code></td>
-    </tr>
-    <tr>
-      <td><code>--no-webpack</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>--no-ecto</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>--no-html</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>--no-gettext</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>--no-dashboard</code></td>
-      <td>do not include Phoenix.LiveDashboard</td>
-    </tr>
-    <tr>
-      <td><code>--install</code></td>
-      <td>will fetch and install dependencies (including npm js)</td>
-    </tr>
-    <tr>
-      <td><code>--no-install</code></td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="generators">Generators</h2>
-
-<h3 id="migration">migration</h3>
-
-<pre><code class="language-shell"># mix ecto.gen.migration &lt;migration name&gt;
-mix ecto.gen.migration add_posts_table
-</code></pre>
-
-<h4 id="other-generators">Other generators</h4>
-
 <ul>
-  <li><code>cert</code></li>
-  <li><code>channel</code></li>
-  <li><code>embedded</code></li>
-  <li><code>presence</code></li>
-  <li><code>secret</code></li>
-</ul>
-
-<h3 id="schema">schema</h3>
-
-<pre><code class="language-shell"># mix phx.gen.schema &lt;schema module&gt; &lt;plural model name&gt; &lt;attributes&gt;
-mix phx.gen.schema Blog.Post blog_posts title:string views:integer
-</code></pre>
-
-<p>This command will create the following files:</p>
-
-<ul>
-  <li>a <em>schema file</em> in <code>lib/my_app/blog/post.ex</code>, with a <code>blog_posts</code> table</li>
-  <li>a <em>migration file</em> (use <code>--no-migration</code> to skip this)</li>
-</ul>
-
-<h4 id="attribute-types">Attribute types</h4>
-
-<ul>
-  <li><code>:string</code> - this is the default type if no type is given</li>
-  <li><code>:integer</code></li>
-  <li><code>:float</code></li>
-  <li><code>:decimal</code></li>
-  <li><code>:boolean</code></li>
-  <li><code>:map</code></li>
-  <li><code>:array</code></li>
-  <li><code>:references</code></li>
-  <li><code>:text</code></li>
-  <li><code>:date</code></li>
-  <li><code>:time</code></li>
-  <li><code>:time_usec</code></li>
-  <li><code>:naive_datetime</code></li>
-  <li><code>:naive_datetime_usec</code></li>
-  <li><code>:utc_datetime</code></li>
-  <li><code>:utc_datetime_usec</code></li>
-  <li><code>:uuid</code></li>
-  <li><code>:binary</code></li>
-  <li><code>:datetime</code> - An alias for <code>:naive_datetime</code></li>
-</ul>
-
-<p><code>user_id:references:users</code> will result in a migration with an <code>:integer</code> column of <code>:user_id</code> and create an index.</p>
-
-<p><code>tags:array:string</code> will create an array type if the database supports it.</p>
-
-<p>Unique columns can be generated with <code>title:unique</code> or <code>unique_int:integer:unique</code></p>
-
-<h4 id="options-1">Options</h4>
-
-<table>
-  <tbody>
-    <tr>
-      <td><code>--table cms_posts</code></td>
-      <td>change the name of the generated table</td>
-    </tr>
-    <tr>
-      <td><code>--no-migration</code></td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="context">context</h3>
-
-<pre><code class="language-shell"># mix phx.gen.context &lt;context&gt; &lt;schema&gt; &lt;plural schema&gt; &lt;attributes&gt;
-mix phx.gen.context Accounts User users name:string age:integer
-</code></pre>
-
-<p>This command will create the following files:</p>
-
-<ul>
-  <li>a context module in <code>accounts.ex</code></li>
-  <li>a schema file in <code>accounts/user.ex</code>, with a <code>users</code> table</li>
-  <li>a migration file</li>
-</ul>
-
-<h4 id="options-2">Options</h4>
-
-<table>
-  <tbody>
-    <tr>
-      <td><code>--table cms_posts</code></td>
-      <td>change the name of the table generated</td>
-    </tr>
-    <tr>
-      <td><code>--no-schema</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>--no-migration</code></td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="html">html</h3>
-
-<pre><code class="language-shell"># mix phx.gen.html &lt;context&gt; &lt;schema&gt; &lt;plural schema&gt; &lt;attributes&gt;
-mix phx.gen.html Accounts User users name:string age:integer
-</code></pre>
-
-<p>This command will create the following files:</p>
-
-<ul>
-  <li>a context module in <code>lib/app/accounts.ex</code> for the accounts API</li>
-  <li>a schema file in <code>lib/app/accounts/user.ex</code>, with an users table</li>
-  <li>a view file in <code>lib/app_web/views/user_view.ex</code></li>
-  <li>a controller file in <code>lib/app_web/controllers/user_controller.ex</code></li>
-  <li>default CRUD templates in <code>lib/app_web/templates/user</code></li>
-</ul>
-
-<h4 id="options-3">Options</h4>
-
-<table>
-  <tbody>
-    <tr>
-      <td><code>--no-context</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>--no-schema</code></td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="json">json</h3>
-
-<pre><code class="language-shell"># mix phx.gen.html &lt;context&gt; &lt;schema&gt; &lt;plural schema&gt; &lt;attributes&gt;
-mix phx.gen.json Accounts User users name:string age:integer
-</code></pre>
-
-<p>This command will create the following files:</p>
-
-<ul>
-  <li>a context module in <code>lib/app/accounts.ex</code> for the accounts API</li>
-  <li>a schema file in <code>lib/app/accounts/user.ex</code>, with an users table</li>
-  <li>a view file in <code>lib/app_web/views/user_view.ex</code></li>
-  <li>a controller file in <code>lib/app_web/controllers/user_controller.ex</code></li>
-</ul>
-
-<h4 id="options-4">Options</h4>
-
-<ul>
-  <li><code>--no-context</code></li>
-  <li><code>--no-schema</code></li>
-</ul>
-
-<h3 id="live">live</h3>
-
-<pre><code class="language-shell"># mix phx.gen.live &lt;context&gt; &lt;schema&gt; &lt;plural schema&gt; &lt;attributes&gt;
-mix phx.gen.live Accounts User users name:string age:integer
-</code></pre>
-
-<p>This command will create the following files:</p>
-
-<ul>
-  <li>a context module in <code>lib/app/accounts.ex</code> for the accounts API</li>
-  <li>a schema file in <code>lib/app/accounts/user.ex</code>, with an users table</li>
-  <li>a view file in <code>lib/app_web/views/user_view.ex</code></li>
-  <li>a LiveView in <code>lib/app_web/live/user_live/show_live.ex</code></li>
-  <li>a LiveView in <code>lib/app_web/live/user_live/index_live.ex</code></li>
-  <li>a LiveComponent in <code>lib/app_web/live/user_live/form_component.ex</code></li>
-  <li>a LiveComponent in <code>lib/app_web/live/modal_component.ex</code></li>
-  <li>a helpers modules in l<code>ib/app_web/live/live_helpers.ex</code></li>
-</ul>
-
-<h4 id="options-5">Options</h4>
-
-<table>
-  <tbody>
-    <tr>
-      <td><code>--no-context</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>--no-schema</code></td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="resources">Resources</h2>
-
-<h3 id="blog-posts">Blog posts</h3>
-
-<ul>
-  <li><a href="https://dashbit.co/blog/using-bootstrap-native-with-live-view">Bootstrap native with Phoneix</a></li>
-  <li><a href="https://dockyard.com/blog/2020/12/21/optimizing-user-experience-with-liveview">Optimizing User Experience with LiveView</a></li>
+  <li><code>-p</code>, <code>--publish list</code> publish container’s ports to the host.
+    <ul>
+      <li>format: <code>local_port:container_port</code>, e.g. <code>8080:8080</code>.</li>
+    </ul>
+  </li>
+  <li><code>--name</code> assign a name to the container.</li>
+  <li><code>--rm</code> automatically remove the container when it exits.</li>
+  <li><code>-d</code>, <code>--detach</code> Run container in background and print container ID.</li>
+  <li><code>-v</code>, <code>--volume list</code> bind mount a volume.
+    <ul>
+      <li>format: <code>local_path:container_path</code>.</li>
+      <li>If <code>local_path</code> is not provided, it will not be mapped.</li>
+    </ul>
+  </li>
 </ul>
 
   </main>
@@ -507,10 +277,26 @@ mix phx.gen.live Accounts User users name:string age:integer
       <div class='group'>
         <div class='related-posts-group'>
           
-            <h3>Other Elixir cheatsheets</h3>
+            <h3>Other Tools cheatsheets</h3>
           
 
           <ul class='related-post-list'>
+            
+              
+                <li class='item related-post-item'>
+  <a href='./git'>
+    <strong>Git</strong>
+    <span>
+      cheatsheet
+
+      
+      <abbr class='attribute-peg -new-layout hint--bottom' data-hint='New layout!'><span></span></abbr>
+      
+    </span>
+  </a>
+</li>
+
+              
             
           </ul>
         </div>
@@ -604,8 +390,8 @@ mix phx.gen.live Accounts User users name:string age:integer
             
               
                 <li class='item related-post-item'>
-  <a href='./docker'>
-    <strong>Docker</strong>
+  <a href='./phoenix'>
+    <strong>Phoenix framework</strong>
     <span>
       cheatsheet
 

@@ -91,11 +91,11 @@
 <!-- deferred css -->
 <script id='deferred-css'>;(function(links){(requestAnimationFrame||mozRequestAnimationFrame||webkitRequestAnimationFrame||msRequestAnimationFrame||(function(fn){window.addEventListener('load',fn)}))(function(){var h=document.getElementsByTagName('head')[0],l,i;for (i=0;i<links.length;i++){l=document.createElement('link');l.rel='stylesheet';l.href=links[i];h.appendChild(l);}})})([
 'https://fonts.googleapis.com/css?family=Cousine',
-'./assets/2017/style.css?t=20201230074837'
+'./assets/2017/style.css?t=20201231015500'
 ])</script>
 <noscript id='deferred-css-fallback'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Cousine'>
-<link rel='stylesheet' href='./assets/2017/style.css?t=20201230074837'>
+<link rel='stylesheet' href='./assets/2017/style.css?t=20201231015500'>
 </noscript>
 
 <script type='application/ld+json'>
@@ -369,7 +369,7 @@ create table master_plan(
 
 <h2 id="altering-tables">Altering tables</h2>
 
-<h3 id="adding-columns">Adding columns</h3>
+<h3 class="-prime" id="adding-columns">Adding columns</h3>
 
 <pre><code class="language-sql">ALTER TABLE &lt;table name&gt;
 ADD &lt;column_name&gt; &lt;data_type&gt; &lt;optional_table_constraint&gt;
@@ -383,15 +383,11 @@ ADD &lt;column_name&gt; &lt;data_type&gt; &lt;optional_table_constraint&gt;
 <pre><code class="language-sql">ALTER TABLE &lt;table_name&gt; DROP &lt;column_name&gt;;
 </code></pre>
 
-<p>See: <a href="https://www.postgresql.org/docs/9.4/sql-altertable.html">ALTER TABLE</a></p>
-
 <h3 id="renaming-columns">Renaming columns</h3>
 
 <pre><code class="language-sql">ALTER TABLE table
 RENAME COLUMN &lt;column_name&gt; TO &lt;new_column_name&gt;;
 </code></pre>
-
-<p>See: <a href="https://www.postgresql.org/docs/9.4/sql-altertable.html">ALTER TABLE</a></p>
 
 <h3 id="foreign-key">Foreign Key</h3>
 
@@ -399,7 +395,16 @@ RENAME COLUMN &lt;column_name&gt; TO &lt;new_column_name&gt;;
 ADD FOREIGN KEY (&lt;column id&gt;) REFERENCES lojas(id);
 </code></pre>
 
-<p>See: <a href="https://www.postgresql.org/docs/9.4/sql-altertable.html">ALTER TABLE</a></p>
+<h3 id="index">Index</h3>
+
+<pre><code class="language-sql">CREATE INDEX &lt;index name&gt; ON &lt;table&gt;(&lt;column);
+ALTER TABLE &lt;table name&gt; DROP INDEX &lt;index name&gt;;
+</code></pre>
+
+<h3 id="enum">Enum</h3>
+
+<pre><code class="language-sql">CREATE TYPE &lt;enum name&gt; AS enum(&lt;enum1&gt;, &lt;enum2&gt;);
+</code></pre>
 
 <h2 id="values">Values</h2>
 
@@ -443,6 +448,20 @@ WHERE &lt;condition&gt;;
   <li>LIMIT</li>
 </ul>
 
+<p><code>GROUP BY</code> is executed after the <code>WHERE</code> clause. To filter results after grouping, use <code>HAVING</code>.</p>
+
+<p>The <code>HAVING</code> clause constraints are written the same way as the <code>WHERE</code> clause constraints, and are applied to the grouped rows.</p>
+
+<pre><code class="language-sql">SELECT DISTINCT column, AGG_FUNC(column_or_expression)
+FROM mytable
+JOIN another_table ON mytable.column = another_table.column
+WHERE constraint_expression
+GROUP BY column
+HAVING constraint_expression
+ORDER BY column ASC/DESC
+LIMIT n OFFSET n;
+</code></pre>
+
 <h3 id="filtering">Filtering</h3>
 
 <pre><code class="language-sql">SELECT &lt;column_name&gt;
@@ -452,7 +471,7 @@ WHERE condition1 AND condition2 OR condition3
 
 <h3 class="-one-column" id="filter-operators">Filter operators</h3>
 
-<table>
+<table class="-headers">
   <thead>
     <tr>
       <th>Operator</th>
@@ -462,36 +481,36 @@ WHERE condition1 AND condition2 OR condition3
   </thead>
   <tbody>
     <tr>
-      <td>=, !=, &lt; &lt;=, &gt;, &gt;=</td>
+      <td><code>=</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code></td>
       <td>Standard numerical operators</td>
-      <td>col_name != 4</td>
+      <td><code>col_name != 4</code></td>
     </tr>
     <tr>
-      <td>BETWEEN … AND …</td>
+      <td><code>BETWEEN … AND …</code></td>
       <td>Number is within range of two values (inclusive)</td>
-      <td>col_name BETWEEN 1.5 AND 10.5</td>
+      <td><code>col_name BETWEEN 1.5 AND 10.5</code></td>
     </tr>
     <tr>
-      <td>NOT BETWEEN … AND …</td>
+      <td><code>NOT BETWEEN … AND …</code></td>
       <td>Number is not within range of two values (inclusive)</td>
-      <td>col_name NOT BETWEEN 1 AND 10</td>
+      <td><code>col_name NOT BETWEEN 1 AND 10</code></td>
     </tr>
     <tr>
-      <td>IN (…)</td>
+      <td><code>IN (…)</code></td>
       <td>Number exists in a list</td>
-      <td>col_name IN (2, 4, 6)</td>
+      <td><code>col_name IN (2, 4, 6)</code></td>
     </tr>
     <tr>
-      <td>NOT IN (…)</td>
+      <td><code>NOT IN (…)</code></td>
       <td>Number does not exist in a list</td>
-      <td>col_name NOT IN (1, 3, 5)</td>
+      <td><code>col_name NOT IN (1, 3, 5)</code></td>
     </tr>
   </tbody>
 </table>
 
 <p>When working with text data the following operators are supported:</p>
 
-<table>
+<table class="-headers">
   <thead>
     <tr>
       <th>Operator</th>
@@ -501,47 +520,82 @@ WHERE condition1 AND condition2 OR condition3
   </thead>
   <tbody>
     <tr>
-      <td>=</td>
+      <td><code>=</code></td>
       <td>Case sensitive exact string comparison (<em>notice the single equals</em>)</td>
-      <td>col_name = “abc”</td>
+      <td><code>col_name = "abc"</code></td>
     </tr>
     <tr>
-      <td>!= or &lt;&gt;</td>
+      <td><code>!=</code> or <code>&lt;&gt;</code></td>
       <td>Case sensitive exact string inequality comparison</td>
-      <td>col_name != “abcd”</td>
+      <td><code>col_name != "abcd"</code></td>
     </tr>
     <tr>
-      <td>LIKE</td>
+      <td><code>LIKE</code></td>
       <td>Case insensitive exact string comparison</td>
-      <td>col_name LIKE “ABC”</td>
+      <td><code>col_name LIKE "ABC"</code></td>
     </tr>
     <tr>
-      <td>NOT LIKE</td>
+      <td><code>NOT LIKE</code></td>
       <td>Case insensitive exact string inequality comparison</td>
-      <td>col_name NOT LIKE “ABCD”</td>
+      <td><code>col_name NOT LIKE "ABCD"</code></td>
     </tr>
     <tr>
-      <td>%</td>
+      <td><code>%</code></td>
       <td>Used anywhere in a string to match a sequence of zero or more characters (only with LIKE or NOT LIKE)</td>
-      <td>col_name LIKE “%AT%”<br />(matches “AT”, “ATTIC”, “CAT” or even “BATS”)</td>
+      <td><code>col_name LIKE "%AT%"&lt;br&gt;(matches "AT", "ATTIC", "CAT" or even "BATS")</code></td>
     </tr>
     <tr>
-      <td>_</td>
+      <td><code>_</code></td>
       <td>Used anywhere in a string to match a single character (only with LIKE or NOT LIKE)</td>
-      <td>col_name LIKE “AN_“<br />(matches “AND”, but not “AN”)</td>
+      <td><code>col_name LIKE "AN_"&lt;br&gt;(matches "AND", but not "AN")</code></td>
     </tr>
     <tr>
-      <td>IN (…)</td>
+      <td><code>IN (…)</code></td>
       <td>String exists in a list</td>
-      <td>col_name IN (“A”, “B”, “C”)</td>
+      <td><code>col_name IN ("A", "B", "C")</code></td>
     </tr>
     <tr>
-      <td>NOT IN (…)</td>
+      <td><code>NOT IN (…)</code></td>
       <td>String does not exist in a list</td>
-      <td>col_name NOT IN (“D”, “E”, “F”)</td>
+      <td><code>col_name NOT IN ("D", "E", "F")</code></td>
     </tr>
   </tbody>
 </table>
+
+<h3 id="aggregate-functions">Aggregate functions</h3>
+
+<table class="-headers">
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>AVG(expression)</code></td>
+      <td>the average (arithmetic mean) of all non-null input values</td>
+    </tr>
+    <tr>
+      <td><code>COUNT(expression)</code></td>
+      <td>number of input rows for which the value of expression is not null</td>
+    </tr>
+    <tr>
+      <td><code>MAX(expression)</code></td>
+      <td>maximum value of expression across all non-null input values</td>
+    </tr>
+    <tr>
+      <td><code>MIN(expression)</code></td>
+      <td>minimum value of expression across all non-null input values</td>
+    </tr>
+    <tr>
+      <td><code>SUM(expression)</code></td>
+      <td>sum of expression across all non-null input values</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>See: <a href="https://www.postgresql.org/docs/9.4/functions-aggregate.html">Aggregate Functions</a></p>
 
 <h3 id="sorting">Sorting</h3>
 
@@ -562,6 +616,42 @@ INNER JOIN another_table ON table.at_id = another_table.id;
 <p>Possible joins: <code>LEFT</code>, <code>RIGHT</code>, <code>FULL</code>.</p>
 
 <p>See also: <a href="https://blog.jooq.org/2016/07/05/say-no-to-venn-diagrams-when-explaining-joins/">Say no to Venn Diagrams on Join</a></p>
+
+<h2 class="-one-column" id="subqueries">Subqueries</h2>
+
+<p><img src="https://pbs.twimg.com/media/EGCeRwfX0AAb9pP?format=jpg&amp;name=large" alt="Subqueries" /></p>
+
+<h2 id="materialized-views">Materialized Views</h2>
+
+<p><a href="https://medium.com/@rebo_dood/the-benefits-of-materialized-views-and-how-to-use-them-in-your-ruby-on-rails-project-4ac1b5432881">Reference</a></p>
+
+<h2 id="common-queries">Common queries</h2>
+
+<h3 id="listing-rows-with-duplicated-values">Listing rows with duplicated values</h3>
+
+<pre><code class="language-sql">SELECT title
+FROM tracks
+GROUP BY title
+HAVING count(id) &gt; 1;
+</code></pre>
+
+<pre><code class="language-sql">SELECT a.*
+FROM tracks a
+JOIN (
+    SELECT title, count(id)
+    FROM tracks
+    GROUP BY title
+    HAVING count(id) &gt; 1) b ON a.title = b.title
+ORDER BY title;
+</code></pre>
+
+<h2 id="resources">Resources</h2>
+
+<h3 id="videos">Videos</h3>
+
+<ul>
+  <li><a href="https://www.youtube.com/watch?v=HubezKbFL7E">Things every developer absolutely, positively needs to know about database indexing</a></li>
+</ul>
 
   </main>
 </div>
@@ -587,7 +677,7 @@ INNER JOIN another_table ON table.at_id = another_table.id;
       
         
         
-        placeholder='Search 15+ cheatsheets'
+        placeholder='Search 16+ cheatsheets'
       >
   </label>
 </form>
@@ -612,7 +702,7 @@ INNER JOIN another_table ON table.at_id = another_table.id;
             <i class='icon'></i>
 
             <span class='description'>
-              Over 15 curated cheatsheets, by developers for developers.
+              Over 16 curated cheatsheets, by developers for developers.
             </span>
 
             <span class='push-button -dark'>
@@ -722,8 +812,8 @@ INNER JOIN another_table ON table.at_id = another_table.id;
             
               
                 <li class='item related-post-item'>
-  <a href='./phoenix'>
-    <strong>Phoenix framework</strong>
+  <a href='./docker'>
+    <strong>Docker</strong>
     <span>
       cheatsheet
 
@@ -758,7 +848,7 @@ function n(n,t,e){n.addEventListener?n.addEventListener(t,e):n.attachEvent("on"+
 },{}],"eoMl":[function(require,module,exports) {
 "use strict";var e=u(require("./wrapify")),d=u(require("dom101/add-class")),t=u(require("dom101/on"));function u(e){return e&&e.__esModule?e:{default:e}}var a,o=document.querySelector("[data-js-main-body]");function r(){a||((0,d.default)(document.documentElement,"LoadDone"),a=!0)}o&&((0,e.default)(o),(0,d.default)(o,"-wrapified")),(0,t.default)(window,"load",r),setTimeout(r,5e3);
 },{"./wrapify":"hE9p","dom101/add-class":"G20n","dom101/on":"DJ2P"}]},{},["eoMl"], null)</script>
-<script src='./assets/packed/app.js?t=20201230074837'></script>
+<script src='./assets/packed/app.js?t=20201231015500'></script>
 
 
 
