@@ -91,11 +91,11 @@
 <!-- deferred css -->
 <script id='deferred-css'>;(function(links){(requestAnimationFrame||mozRequestAnimationFrame||webkitRequestAnimationFrame||msRequestAnimationFrame||(function(fn){window.addEventListener('load',fn)}))(function(){var h=document.getElementsByTagName('head')[0],l,i;for (i=0;i<links.length;i++){l=document.createElement('link');l.rel='stylesheet';l.href=links[i];h.appendChild(l);}})})([
 'https://fonts.googleapis.com/css?family=Cousine',
-'./assets/2017/style.css?t=20201231015500'
+'./assets/2017/style.css?t=20210101022407'
 ])</script>
 <noscript id='deferred-css-fallback'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Cousine'>
-<link rel='stylesheet' href='./assets/2017/style.css?t=20201231015500'>
+<link rel='stylesheet' href='./assets/2017/style.css?t=20210101022407'>
 </noscript>
 
 <script type='application/ld+json'>
@@ -191,7 +191,243 @@
   <main class='post-content MarkdownBody' data-js-main-body data-js-anchors role='main'>
     <h2 id="intro">Intro</h2>
 
-<p>Git</p>
+<h2 id="staging">Staging</h2>
+
+<h3 id="show-unstaged-differences-since-last-commit">Show unstaged differences since last commit</h3>
+
+<pre><code class="language-shell">git diff
+</code></pre>
+
+<h4 id="options">Options</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code>--staged</code></td>
+      <td>includes staged changes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="remove-all-changes-on-file-since-last-commit">Remove all changes on file since last commit</h3>
+
+<pre><code class="language-shell">git checkout -- &lt;file name&gt;
+</code></pre>
+
+<h3 id="undo-last-commit">Undo last commit</h3>
+
+<pre><code class="language-shell">git reset --soft HEAD^
+</code></pre>
+
+<h4 id="options-1">Options</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code>--soft</code></td>
+      <td>put changes into staging</td>
+    </tr>
+    <tr>
+      <td><code>--hard</code></td>
+      <td>erase all changes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="add-file-to-last-commit">Add file to last commit:</h3>
+
+<pre><code class="language-shell">git add &lt;file&gt;
+git commit --amend
+</code></pre>
+
+<h4 id="options-2">Options</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code>-m "&lt;message&gt;"</code></td>
+      <td>overwrites the previous commit message</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="remove-untracked-files">Remove untracked files</h3>
+
+<pre><code class="language-shell">git clean -fd
+</code></pre>
+
+<h2 id="remote">Remote</h2>
+
+<h3 id="show-all-remotes">Show all remotes</h3>
+
+<pre><code class="language-shell">git remote -v
+</code></pre>
+
+<h3 id="add-and-remove-a-remote">Add and remove a remote</h3>
+
+<pre><code class="language-shell">git remote add &lt;remote name&gt; &lt;url&gt;
+git remote remove &lt;remote name&gt;
+</code></pre>
+
+<h3 id="set-a-different-url-to-a-existing-remote">Set a different url to a existing remote</h3>
+
+<pre><code class="language-shell">git remote set-url &lt;remote name&gt; &lt;url&gt;
+</code></pre>
+
+<h3 id="lists-all-remote-branches-and-gives-information">Lists all remote branches and gives information</h3>
+
+<pre><code class="language-shell">git remote show origin
+</code></pre>
+
+<h3 id="delete-a-remote-branch">Delete a remote branch:</h3>
+
+<pre><code class="language-shell">git push &lt;remote name&gt; :&lt;branch name&gt; # Note the colon!
+</code></pre>
+
+<h3 id="remove-deleted-remote-branches-from-local">Remove deleted remote branches from local</h3>
+
+<pre><code class="language-shell">git remote prune &lt;remote name&gt;
+</code></pre>
+
+<h3 id="reset-local-branch-to-remote">Reset local branch to remote</h3>
+
+<pre><code class="language-shell">git reset --hard origin/branch-name
+</code></pre>
+
+<h2 id="tagging">Tagging</h2>
+
+<h3 id="list-tags">List tags</h3>
+
+<pre><code class="language-shell">git tag
+</code></pre>
+
+<h3 id="add-tag">Add tag</h3>
+
+<pre><code class="language-shell">git tag -a &lt;tag name&gt; -m &lt;tag message&gt;
+git push --tags
+</code></pre>
+
+<h2 id="rebase">Rebase</h2>
+
+<p>Interactive with the last 3 commits, from oldest to newest:</p>
+
+<pre><code class="language-shell">git rebase -i HEAD~3
+</code></pre>
+
+<h4 id="commands">Commands</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code>pick</code></td>
+      <td>puts commit in temporary area while rebasing.</td>
+    </tr>
+    <tr>
+      <td><code>reword</code></td>
+      <td>change a commit message.</td>
+    </tr>
+    <tr>
+      <td><code>edit</code></td>
+      <td>this will stop the rebase and put you into staging at the point of that commit.</td>
+    </tr>
+    <tr>
+      <td><code>squash</code></td>
+      <td>that commit into the previous one, when rebasing change the commit message for both of the commits.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="stashing">Stashing</h2>
+
+<pre><code class="language-shell">git stash list
+git stash save &lt;message&gt; # save and message optional
+git stash apply &lt;stash name&gt; # stash@{0} is default if stash name is not specified
+git stash drop &lt;stash name&gt; # stash@{0} is default if stash name is not specified
+git stash pop # does apply + drop
+git stash clear # deletes all stashes
+</code></pre>
+
+<h4 id="options-3">Options</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code>--keep-index</code></td>
+      <td>stash only <strong>unstaged</strong> files.</td>
+    </tr>
+    <tr>
+      <td><code>--include-untracked</code></td>
+      <td>stash untracked files too.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="create-a-new-branch-with-the-contents-of-the-stash">Create a new branch with the contents of the stash</h3>
+
+<pre><code class="language-shell">git stash branch &lt;new branch name&gt; &lt;stash&gt;
+# stash is stash@{0} for example
+</code></pre>
+
+<h2 class="-one-column" id="rewriting-history">Rewriting history</h2>
+
+<pre><code class="language-shell">git filter-branch --tree-filter &lt;command&gt;
+
+# Examples
+git ... --tree-filter 'rm -f passwords.txt' -- --all # all commits in all branches
+git ... --tree-filter 'find . -name "*.mp4" -exec rm{} \;' HEAD # only current branch
+</code></pre>
+
+<p>To run against each commit without checking it out first (faster):</p>
+
+<pre><code class="language-shell">git filter-branch --index-filter 'git rm --cached --ignore-unmatch password.txt'
+</code></pre>
+
+<p>Delete all commits without contents:</p>
+
+<pre><code class="language-shell">git filter-branch -f --prune-empty -- --all
+</code></pre>
+
+<h2 id="cherry-pick">Cherry-pick</h2>
+
+<pre><code class="language-shell">git log # find out the commit id
+git checkout &lt;branch name&gt;
+git cherry-pick &lt;commit id&gt;
+git cherry-pick &lt;initial commit id&gt;..&lt;final commit id&gt;
+</code></pre>
+
+<h4 id="options-4">Options</h4>
+
+<ul>
+  <li><code>--edit</code> changes commit message.</li>
+  <li>-<code>n, --no-commit hash1 hash2</code> only stages the changes from those commits, you have to commit manually.</li>
+  <li><code>-x</code> adds the source branch to the commit message.</li>
+</ul>
+
+<h2 id="reflog">Reflog</h2>
+
+<h3 id="deleted-commit">Deleted commit</h3>
+
+<pre><code class="language-shell">git reflog # find the commit id
+git reset --hard &lt;commit id&gt; # or commit name, eg HEAD@{0}
+</code></pre>
+
+<h3 id="deleted-branch">Deleted branch</h3>
+
+<pre><code class="language-shell">git log --walk-reflogs
+git branch &lt;branch name&gt; &lt;commit id&gt;
+</code></pre>
+
+<h2 id="reverting">Reverting</h2>
+
+<h3 id="revert-a-single-file">Revert a single file</h3>
+
+<pre><code class="language-shell">git checkout [commit ID] -- path/to/file
+</code></pre>
+
+<p>where <code>commit ID</code> is the version of the file you want to reverto to.</p>
+
+<p>Commit the change.</p>
+
 
   </main>
 </div>
@@ -404,7 +640,7 @@ function n(n,t,e){n.addEventListener?n.addEventListener(t,e):n.attachEvent("on"+
 },{}],"eoMl":[function(require,module,exports) {
 "use strict";var e=u(require("./wrapify")),d=u(require("dom101/add-class")),t=u(require("dom101/on"));function u(e){return e&&e.__esModule?e:{default:e}}var a,o=document.querySelector("[data-js-main-body]");function r(){a||((0,d.default)(document.documentElement,"LoadDone"),a=!0)}o&&((0,e.default)(o),(0,d.default)(o,"-wrapified")),(0,t.default)(window,"load",r),setTimeout(r,5e3);
 },{"./wrapify":"hE9p","dom101/add-class":"G20n","dom101/on":"DJ2P"}]},{},["eoMl"], null)</script>
-<script src='./assets/packed/app.js?t=20201231015500'></script>
+<script src='./assets/packed/app.js?t=20210101022407'></script>
 
 
 

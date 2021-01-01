@@ -91,11 +91,11 @@
 <!-- deferred css -->
 <script id='deferred-css'>;(function(links){(requestAnimationFrame||mozRequestAnimationFrame||webkitRequestAnimationFrame||msRequestAnimationFrame||(function(fn){window.addEventListener('load',fn)}))(function(){var h=document.getElementsByTagName('head')[0],l,i;for (i=0;i<links.length;i++){l=document.createElement('link');l.rel='stylesheet';l.href=links[i];h.appendChild(l);}})})([
 'https://fonts.googleapis.com/css?family=Cousine',
-'./assets/2017/style.css?t=20201231015500'
+'./assets/2017/style.css?t=20210101022407'
 ])</script>
 <noscript id='deferred-css-fallback'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Cousine'>
-<link rel='stylesheet' href='./assets/2017/style.css?t=20201231015500'>
+<link rel='stylesheet' href='./assets/2017/style.css?t=20210101022407'>
 </noscript>
 
 <script type='application/ld+json'>
@@ -619,11 +619,49 @@ INNER JOIN another_table ON table.at_id = another_table.id;
 
 <h2 class="-one-column" id="subqueries">Subqueries</h2>
 
-<p><img src="https://pbs.twimg.com/media/EGCeRwfX0AAb9pP?format=jpg&amp;name=large" alt="Subqueries" /></p>
+<p>There are a lot of questions you can’t answer with one simple SQL query, for example when you need to <code>GROUP BY</code> two different columns. Solution: put more queries in your query!</p>
+
+<p>Here’s an example of comparing common cat names and dog names by doing two <code>GROUP BY</code>s:</p>
+
+<pre><code class="language-sql">WITH dog_counts AS (
+    SELECT name, count(*) as dogs_with_name
+    FROM dogs GROUP BY 1
+),
+cat_counts AS (
+    SELECT name, count(*) as cats_with_name
+    FROM cats GROUP BY 1
+)
+SELECT dog_counts.name, dogs_with_name, cats_with_name
+FROM cat_counts FULL OUTER JOIN dog_counts USING (name)
+ORDER BY dogs_with_name
+</code></pre>
+
+<p>These queries-inside-queries are called subqueries and here are a few places you can put them:</p>
+
+<p>In a <code>WITH</code> statement before the query:</p>
+
+<pre><code class="language-sql">WITH table1 as (&lt;subquery&gt;),
+table2 as (&lt;subquery&gt;)
+SELECT ... FROM table1 LEFT JOIN table2 ...
+</code></pre>
+
+<p>Inline in a <code>FROM</code>:</p>
+
+<pre><code class="language-sql">SELECT ...
+FROM (&lt;subquery&gt;)
+GROUP BY ...
+</code></pre>
+
+<p>In a <code>WHERE</code> (the subquery has to return just 1 column here):</p>
+
+<pre><code class="language-sql">SELECT ...
+FROM table
+WHERE name IN (&lt;subquery&gt;)
+</code></pre>
 
 <h2 id="materialized-views">Materialized Views</h2>
 
-<p><a href="https://medium.com/@rebo_dood/the-benefits-of-materialized-views-and-how-to-use-them-in-your-ruby-on-rails-project-4ac1b5432881">Reference</a></p>
+<p>See: <a href="https://medium.com/@rebo_dood/the-benefits-of-materialized-views-and-how-to-use-them-in-your-ruby-on-rails-project-4ac1b5432881">The Benefits of Materialized Views (and how to use them in your Ruby on Rails project)</a></p>
 
 <h2 id="common-queries">Common queries</h2>
 
@@ -848,8 +886,8 @@ function n(n,t,e){n.addEventListener?n.addEventListener(t,e):n.attachEvent("on"+
 },{}],"eoMl":[function(require,module,exports) {
 "use strict";var e=u(require("./wrapify")),d=u(require("dom101/add-class")),t=u(require("dom101/on"));function u(e){return e&&e.__esModule?e:{default:e}}var a,o=document.querySelector("[data-js-main-body]");function r(){a||((0,d.default)(document.documentElement,"LoadDone"),a=!0)}o&&((0,e.default)(o),(0,d.default)(o,"-wrapified")),(0,t.default)(window,"load",r),setTimeout(r,5e3);
 },{"./wrapify":"hE9p","dom101/add-class":"G20n","dom101/on":"DJ2P"}]},{},["eoMl"], null)</script>
-<script src='./assets/packed/app.js?t=20201231015500'></script>
-
+<script src='./assets/packed/app.js?t=20210101022407'></script>
+<script src='https://cdn.jsdelivr.net/npm/prismjs@1.6.0/components/prism-sql.min.js'></script>
 
 
 </body>

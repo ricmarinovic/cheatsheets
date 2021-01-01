@@ -91,11 +91,11 @@
 <!-- deferred css -->
 <script id='deferred-css'>;(function(links){(requestAnimationFrame||mozRequestAnimationFrame||webkitRequestAnimationFrame||msRequestAnimationFrame||(function(fn){window.addEventListener('load',fn)}))(function(){var h=document.getElementsByTagName('head')[0],l,i;for (i=0;i<links.length;i++){l=document.createElement('link');l.rel='stylesheet';l.href=links[i];h.appendChild(l);}})})([
 'https://fonts.googleapis.com/css?family=Cousine',
-'./assets/2017/style.css?t=20201231015500'
+'./assets/2017/style.css?t=20210101022407'
 ])</script>
 <noscript id='deferred-css-fallback'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Cousine'>
-<link rel='stylesheet' href='./assets/2017/style.css?t=20201231015500'>
+<link rel='stylesheet' href='./assets/2017/style.css?t=20210101022407'>
 </noscript>
 
 <script type='application/ld+json'>
@@ -191,7 +191,212 @@
   <main class='post-content MarkdownBody' data-js-main-body data-js-anchors role='main'>
     <h2 id="intro">Intro</h2>
 
-<p>C programming language</p>
+<p>From the K&amp;R book:</p>
+
+<blockquote>
+  <p>For most programmers, the most important change is a new syntax for declaring and defining functions. A function declaration can now include a description of the arguments of the function; the definition syntax changes to match. This extra information makes it much easier for compilers to detect errors caused by mismatched arguments; in our experience, it is a very useful addition to the language. (p. 2)</p>
+</blockquote>
+
+<blockquote>
+  <p>C retains the basic philosophy that programmers know what they are doing; it only requires that they state their intentions explicitly. (p. 3)</p>
+</blockquote>
+
+<h2 id="variables">Variables</h2>
+
+<ul>
+  <li>Automatic variables are variables inside a function, therefore local variables.</li>
+  <li>External and static variables are always initialized to zero.</li>
+  <li>Automatic variables without explicit initialized have undefined values.</li>
+  <li>Definition refers to the place where the variable is created and assigned storage.
+  int bar;
+  int g(int lhs, int rhs) {return lhs*rhs;}</li>
+  <li>Declaration refers to places where the nature of the variable is stated but no storage is allocated.
+  extern int bar;
+  extern int g(int, int);</li>
+  <li>For external and static variables, the initializer must be a constant expression and the initialization is done once, before the program begins execution.</li>
+</ul>
+
+<h3 id="static">Static</h3>
+
+<ul>
+  <li>The <code>static</code> declaration, applied to an external variable or function, limits the scope of that object to the rest of the source file being compiled.</li>
+  <li>The <code>static</code> declaration applied to internal variables cause the variable to remain in existence rather than coming and going each time the function is activated. This means that internal <code>static</code> variables provide private, permanent storage within a single function.</li>
+</ul>
+
+<h3 id="enums">Enums</h3>
+
+<pre><code class="language-c">enum months { JAN = 1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC };
+</code></pre>
+
+<h3 id="const">const</h3>
+
+<pre><code class="language-c">const int a = 2;
+int *pa = &amp;a; // this will make const on line 1 useless
+
+const int *pa = &amp;a;
+*pa = 9; // can't assign
+
+int *const pa = &amp;a;
+pa = &amp;a; // can't change what it points to
+</code></pre>
+
+<h2 id="bitwise">Bitwise</h2>
+
+<h3 id="operators">Operators</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Bitwise operators</th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>&amp;</code></td>
+      <td>AND</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>|</code></td>
+      <td>OR</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>^</code></td>
+      <td>XOR</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>&lt;&lt;</code></td>
+      <td>left shift</td>
+      <td><code>a &lt;&lt; x</code> is the same as <code>a * 2^x</code></td>
+    </tr>
+    <tr>
+      <td><code>&gt;&gt;</code></td>
+      <td>right shift</td>
+      <td><code>a &gt;&gt; x</code> is the same as <code>a / 2^x</code></td>
+    </tr>
+    <tr>
+      <td><code>~</code></td>
+      <td>1’s complement</td>
+      <td>It will be represented as a negative number.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="examples">Examples</h3>
+
+<pre><code class="language-c">a &amp; ~8 // turn fourth bit off
+a | 8 // turn fourth bit on
+a ^ 8 // flip the fourth bit
+</code></pre>
+
+<pre><code class="language-c">int a = 5, b;
+b = a++; // this will set b to 5 and a to 6
+b = ++a; // this will set b to 6 and a to 6
+</code></pre>
+
+<h2 id="bit-fields">Bit-fields</h2>
+
+<pre><code class="language-c">enum
+{
+    KEYWORD = 01,
+    EXTERNAL = 02,
+    STATIC = 04
+};
+
+// turn on EXTERNAL and STATIC bits in flags
+flags |= EXTERNAL | STATIC
+// turn off
+flags &amp;= ~(EXTERNAL | STATIC);
+// test them
+if ((flags &amp; (EXTERNAL | STATIC)) == 0)
+</code></pre>
+
+<p>Using a struct bit-field:</p>
+
+<pre><code class="language-c">    struct
+    {
+        unsigned int is_keyword : 1;
+        unsigned int is_extern : 1;
+        unsigned int is_static : 1;
+    } flags;
+
+    flags.is_extern = flags.is_static = 1;
+    flags.is_extern = flags.is_static = 0;
+    if (flags.is_extern == 0 &amp;&amp; flags.is_static == 0)
+</code></pre>
+
+<p>Fields may be declared only as ints, specify <code>unsigned</code> explicitly.</p>
+
+<h2 id="unions">Unions</h2>
+
+<p>Union is a variable that may hold objects of different types and sizes.</p>
+
+<pre><code class="language-c">union u_tag {
+    int ival;
+    float fval;
+    char *sval;
+} u;
+
+u.ival;
+</code></pre>
+
+<p>See: <a href="https://stackoverflow.com/questions/252552/why-do-we-need-c-unions">SO: Why do we need C Unions?</a></p>
+
+<h3 id="accessing-individual-bytes">Accessing individual bytes</h3>
+
+<pre><code class="language-c">typedef union
+{
+    struct {
+        unsigned char byte1;
+        unsigned char byte2;
+        unsigned char byte3;
+        unsigned char byte4;
+    } bytes;
+    unsigned int dword;
+} HW_Register;
+HW_Register reg;
+
+reg.dword = 0x12345678;
+// reg.bytes.byte3 will be 56 (depends on endianess)
+</code></pre>
+
+<h3 id="accessing-individual-bits-of-a-byte">Accessing individual bits of a byte</h3>
+
+<pre><code class="language-c">typedef union
+{
+    struct {
+        unsigned char b1:1;
+        unsigned char b2:1;
+        unsigned char b3:1;
+        unsigned char b4:1;
+        unsigned char reserved:4;
+    } bits;
+    unsigned char byte;
+} HW_RegisterB;
+HW_RegisterB reg;
+
+reg.byte = 15;
+// reg.bits.b3 will be 1
+</code></pre>
+
+<h2 id="function-pointers">Function pointers</h2>
+
+<pre><code class="language-c">int fun(int a) {
+    return a;
+}
+
+int (*fun_ptr)(int) = &amp;fun;
+</code></pre>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="http://c-faq.com/index.html">comp.lang.c Frequently Asked Questions</a></li>
+</ul>
 
   </main>
 </div>
@@ -388,8 +593,8 @@ function n(n,t,e){n.addEventListener?n.addEventListener(t,e):n.attachEvent("on"+
 },{}],"eoMl":[function(require,module,exports) {
 "use strict";var e=u(require("./wrapify")),d=u(require("dom101/add-class")),t=u(require("dom101/on"));function u(e){return e&&e.__esModule?e:{default:e}}var a,o=document.querySelector("[data-js-main-body]");function r(){a||((0,d.default)(document.documentElement,"LoadDone"),a=!0)}o&&((0,e.default)(o),(0,d.default)(o,"-wrapified")),(0,t.default)(window,"load",r),setTimeout(r,5e3);
 },{"./wrapify":"hE9p","dom101/add-class":"G20n","dom101/on":"DJ2P"}]},{},["eoMl"], null)</script>
-<script src='./assets/packed/app.js?t=20201231015500'></script>
-
+<script src='./assets/packed/app.js?t=20210101022407'></script>
+<script src='https://cdn.jsdelivr.net/npm/prismjs@1.6.0/components/prism-c.min.js'></script>
 
 
 </body>
