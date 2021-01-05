@@ -1,6 +1,8 @@
 enabled: true
 names:
+  # - Algorithms
   - C-like
+  - Data structures
   # - CLI
   - Databases
   # - Devops

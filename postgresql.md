@@ -379,6 +379,15 @@ FROM table
 WHERE name IN (<subquery>)
 ```
 
+Views
+-------------------------------------
+
+```sql
+CREATE VIEW <view_name>
+AS <select_statement>
+SELECT ...
+```
+
 
 Materialized Views
 -------------------------------------
@@ -416,3 +425,7 @@ Resources
 ### Videos
 
 - [Things every developer absolutely, positively needs to know about database indexing](https://www.youtube.com/watch?v=HubezKbFL7E)
+
+### Lectures
+
+- [CS186 Berkeley on YouTube](https://www.youtube.com/playlist?list=PLYp4IGUhNFmw8USiYMJvCUjZe79fvyYge)
