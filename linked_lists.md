@@ -3,7 +3,7 @@ title: Linked Lists
 category: Data structures
 tags: [WIP]
 prism_languages: [c]
-updated: 2021-01-03
+updated: 2021-01-05
 weight: -1
 ---
 
@@ -18,16 +18,16 @@ Reversing
 ```c
 void List_reverse(List *list)
 {
-    List_node *cur = list->head;
+    List_node *curr = list->head;
     List_node *next = 0;
     List_node *prev = 0;
 
-    while(cur)
+    while(curr)
     {
-        next = cur->next;
-        cur->next = prev;
-        prev = cur;
-        cur = next;
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
     }
     list->head = prev;
 }
