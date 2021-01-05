@@ -23,25 +23,25 @@
 <meta charset='utf-8'>
 <meta content='width=device-width, initial-scale=1.0' name='viewport'>
 <link href='./assets/favicon.png' rel='shortcut icon'>
-<meta content='/rust.html' name='app:pageurl'>
+<meta content='/linked_lists.html' name='app:pageurl'>
 
 
-  <title>Rust cheatsheet</title>
-  <meta content='Rust cheatsheet' property='og:title'>
-  <meta content='Rust cheatsheet' property='twitter:title'>
+  <title>Linked Lists cheatsheet</title>
+  <meta content='Linked Lists cheatsheet' property='og:title'>
+  <meta content='Linked Lists cheatsheet' property='twitter:title'>
   <meta content='article' property='og:type'>
 
 
 
 
 
-  <meta content="The one-page guide to Rust: usage, examples, links, snippets, and more." name="description">
-  <meta content="The one-page guide to Rust: usage, examples, links, snippets, and more." property="og:description">
-  <meta content="The one-page guide to Rust: usage, examples, links, snippets, and more." property="twitter:description">
+  <meta content="The one-page guide to Linked Lists: usage, examples, links, snippets, and more." name="description">
+  <meta content="The one-page guide to Linked Lists: usage, examples, links, snippets, and more." property="og:description">
+  <meta content="The one-page guide to Linked Lists: usage, examples, links, snippets, and more." property="twitter:description">
 
 
-<link rel="canonical" href="https://devhints.io/rust">
-<meta name="og:url" content="https://devhints.io/rust">
+<link rel="canonical" href="https://devhints.io/linked_lists">
+<meta name="og:url" content="https://devhints.io/linked_lists">
 
 
 
@@ -57,12 +57,10 @@
 
 
 
-  <meta content='Rust' property='article:section'>
+  <meta content='Data structures' property='article:section'>
 
 
 
-
-  <meta content='Featured' property='article:tag'>
 
   <meta content='WIP' property='article:tag'>
 
@@ -106,9 +104,9 @@
     "@type": "WebPage",
     "@id": "https://google.com/article"
   },
-  "headline": "Rust cheatsheet",
+  "headline": "Linked Lists cheatsheet",
   "image": [ null ],
-  "description": "The one-page guide to Rust: usage, examples, links, snippets, and more."
+  "description": "The one-page guide to Linked Lists: usage, examples, links, snippets, and more."
 }
 </script>
 <script type='application/ld+json'>
@@ -119,15 +117,15 @@
     "@type": "ListItem",
     "position": 1,
     "item": {
-      "@id": "https://devhints.io/#rust",
-      "name": "Rust"
+      "@id": "https://devhints.io/#data-structures",
+      "name": "Data structures"
     }
   },{
     "@type": "ListItem",
     "position": 2,
     "item": {
-      "@id": "https://devhints.io/rust",
-      "name": "Rust"
+      "@id": "https://devhints.io/linked_lists",
+      "name": "Linked Lists"
     }
   }]
 }
@@ -157,7 +155,7 @@
         
           <ul class='page-actions'>
             <li class='link github -button hint--bottom' data-hint='Edit this page on GitHub'>
-              <a href='https://github.com/ricmarinovic/library/blob/master/rust.md'>
+              <a href='https://github.com/ricmarinovic/library/blob/master/linked_lists.md'>
                 <span class='text -visible'>Edit</span>
               </a>
             </li>
@@ -171,7 +169,7 @@
 
 <div class='body-area'>
   <header class='main-heading -center' role='banner'>
-    <h1 class='h1'>Rust <em>cheatsheet</em></h1>
+    <h1 class='h1'>Linked Lists <em>cheatsheet</em></h1>
 
     <div class='pubbox' data-js-no-preview>
       
@@ -180,7 +178,7 @@
 
   
     <aside class='notice-box'>
-      This page is a work in progress. You can help by <a href='https://github.com/ricmarinovic/library/blob/master/rust.md'>suggesting edits</a>!
+      This page is a work in progress. You can help by <a href='https://github.com/ricmarinovic/library/blob/master/linked_lists.md'>suggesting edits</a>!
     </aside>
   
 
@@ -191,7 +189,47 @@
   <main class='post-content MarkdownBody' data-js-main-body data-js-anchors role='main'>
     <h2 id="intro">Intro</h2>
 
-<p>Rust</p>
+<h2 id="reversing">Reversing</h2>
+
+<h3 id="iterative">Iterative</h3>
+
+<pre><code class="language-c">void List_reverse(List *list)
+{
+    List_node *cur = list-&gt;head;
+    List_node *next = 0;
+    List_node *prev = 0;
+
+    while(cur)
+    {
+        next = cur-&gt;next;
+        cur-&gt;next = prev;
+        prev = cur;
+        cur = next;
+    }
+    list-&gt;head = prev;
+}
+</code></pre>
+
+<h3 id="recursive">Recursive</h3>
+
+<pre><code class="language-c">List_node *List_do_recur_reverse(List_node *head)
+{
+    if (head == NULL || head-&gt;next == NULL)
+    {
+        return head;
+    }
+
+    List_node *reversed_list_head = List_do_recur_reverse(head-&gt;next);
+    head-&gt;next-&gt;next = head;
+    head-&gt;next = 0;
+    return reversed_list_head;
+}
+
+void List_recur_reverse(List *list)
+{
+    list-&gt;head = List_do_recur_reverse(list-&gt;head);
+}
+</code></pre>
 
   </main>
 </div>
@@ -255,7 +293,7 @@
       <div class='group'>
         <div class='related-posts-group'>
           
-            <h3>Other Rust cheatsheets</h3>
+            <h3>Other Data structures cheatsheets</h3>
           
 
           <ul class='related-post-list'>
@@ -352,8 +390,8 @@
             
               
                 <li class='item related-post-item'>
-  <a href='./docker'>
-    <strong>Docker</strong>
+  <a href='./rust'>
+    <strong>Rust</strong>
     <span>
       cheatsheet
 
@@ -389,7 +427,7 @@ function n(n,t,e){n.addEventListener?n.addEventListener(t,e):n.attachEvent("on"+
 "use strict";var e=u(require("./wrapify")),d=u(require("dom101/add-class")),t=u(require("dom101/on"));function u(e){return e&&e.__esModule?e:{default:e}}var a,o=document.querySelector("[data-js-main-body]");function r(){a||((0,d.default)(document.documentElement,"LoadDone"),a=!0)}o&&((0,e.default)(o),(0,d.default)(o,"-wrapified")),(0,t.default)(window,"load",r),setTimeout(r,5e3);
 },{"./wrapify":"hE9p","dom101/add-class":"G20n","dom101/on":"DJ2P"}]},{},["eoMl"], null)</script>
 <script src='./assets/packed/app.js?t=20210105080046'></script>
-
+<script src='https://cdn.jsdelivr.net/npm/prismjs@1.6.0/components/prism-c.min.js'></script>
 
 
 </body>
