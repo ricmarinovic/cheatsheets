@@ -2,8 +2,8 @@
 title: Linked Lists
 category: Data structures
 tags: [WIP]
-prism_languages: [c]
-updated: 2021-01-05
+prism_languages: [cpp]
+updated: 2021-01-16
 weight: -1
 ---
 
@@ -15,7 +15,12 @@ Reversing
 
 ### Iterative
 
-```c
+- Advance `next`.
+- Reverse: Point `curr->next` to the `prev` node.
+- Advance `prev` and `curr`.
+- Make the last `prev` the new `head` of the list.
+
+```cpp
 void List_reverse(List *list)
 {
     List_node *curr = list->head;
@@ -29,28 +34,34 @@ void List_reverse(List *list)
         prev = curr;
         curr = next;
     }
+
     list->head = prev;
 }
 ```
 
 ### Recursive
 
-```c
-List_node *List_do_recur_reverse(List_node *head)
+- Set the **stop** condition
+- **Recurse** with tail
+- **Apply** the change (make the next node point to head)
+- **Return** the head
+
+```cpp
+List_node *List_do_reverse(List_node *head)
 {
     if (head == NULL || head->next == NULL)
     {
         return head;
     }
 
-    List_node *reversed_list_head = List_do_recur_reverse(head->next);
+    List_node *reversed_list_head = List_do_reverse(head->next);
     head->next->next = head;
     head->next = 0;
     return reversed_list_head;
 }
 
-void List_recur_reverse(List *list)
+void List_reverse_recursive(List *list)
 {
-    list->head = List_do_recur_reverse(list->head);
+    list->head = List_do_reverse(list->head);
 }
 ```
