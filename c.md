@@ -2,7 +2,7 @@
 title: C language
 category: C-like
 tags: [Featured, WIP]
-prism_languages: [c]
+prism_languages: [cpp]
 updated: 2020-12-30
 weight: -2
 ---
@@ -38,13 +38,13 @@ Variables
 
 ### Enums
 
-```c
+```cpp
 enum months { JAN = 1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC };
 ```
 
 ### const
 
-```c
+```cpp
 const int a = 2;
 int *pa = &a; // this will make const on line 1 useless
 
@@ -71,13 +71,13 @@ Bitwise
 
 ### Examples
 
-```c
+```cpp
 a & ~8 // turn fourth bit off
 a | 8 // turn fourth bit on
 a ^ 8 // flip the fourth bit
 ```
 
-```c
+```cpp
 int a = 5, b;
 b = a++; // this will set b to 5 and a to 6
 b = ++a; // this will set b to 6 and a to 6
@@ -86,7 +86,7 @@ b = ++a; // this will set b to 6 and a to 6
 Bit-fields
 -------------------------------------
 
-```c
+```cpp
 enum
 {
     KEYWORD = 01,
@@ -102,9 +102,9 @@ flags &= ~(EXTERNAL | STATIC);
 if ((flags & (EXTERNAL | STATIC)) == 0)
 ```
 
-Using a struct bit-field:
+### Using a struct bit-field
 
-```c
+```cpp
     struct
     {
         unsigned int is_keyword : 1;
@@ -124,7 +124,7 @@ Unions
 
 Union is a variable that may hold objects of different types and sizes.
 
-```c
+```cpp
 union u_tag {
     int ival;
     float fval;
@@ -138,7 +138,7 @@ See: [SO: Why do we need C Unions?](https://stackoverflow.com/questions/252552/w
 
 ### Accessing individual bytes
 
-```c
+```cpp
 typedef union
 {
     struct {
@@ -157,7 +157,7 @@ reg.dword = 0x12345678;
 
 ### Accessing individual bits of a byte
 
-```c
+```cpp
 typedef union
 {
     struct {
@@ -178,12 +178,20 @@ reg.byte = 15;
 Function pointers
 -------------------------------------
 
-```c
+```cpp
 int fun(int a) {
-    return a;
+    return a * 2;
 }
 
-int (*fun_ptr)(int) = &fun;
+int (*fun_ptr)(int) = &fun; // & is optional
+(*fun_ptr)(10); // * is optional, fun_ptr(10) also works
+```
+
+```cpp
+void wrapper(void (*fun)(int)) // * is optional, fun(int) also works
+{
+    fun(2);
+}
 ```
 
 References
