@@ -89,11 +89,11 @@
 <!-- deferred css -->
 <script id='deferred-css'>;(function(links){(requestAnimationFrame||mozRequestAnimationFrame||webkitRequestAnimationFrame||msRequestAnimationFrame||(function(fn){window.addEventListener('load',fn)}))(function(){var h=document.getElementsByTagName('head')[0],l,i;for (i=0;i<links.length;i++){l=document.createElement('link');l.rel='stylesheet';l.href=links[i];h.appendChild(l);}})})([
 'https://fonts.googleapis.com/css?family=Cousine',
-'./assets/2017/style.css?t=20210105080046'
+'./assets/2017/style.css?t=20210211225109'
 ])</script>
 <noscript id='deferred-css-fallback'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Cousine'>
-<link rel='stylesheet' href='./assets/2017/style.css?t=20210105080046'>
+<link rel='stylesheet' href='./assets/2017/style.css?t=20210211225109'>
 </noscript>
 
 <script type='application/ld+json'>
@@ -193,41 +193,56 @@
 
 <h3 id="iterative">Iterative</h3>
 
-<pre><code class="language-c">void List_reverse(List *list)
+<ul>
+  <li>Advance <code>next</code>.</li>
+  <li>Reverse: Point <code>curr-&gt;next</code> to the <code>prev</code> node.</li>
+  <li>Advance <code>prev</code> and <code>curr</code>.</li>
+  <li>Make the last <code>prev</code> the new <code>head</code> of the list.</li>
+</ul>
+
+<pre><code class="language-cpp">void List_reverse(List *list)
 {
-    List_node *cur = list-&gt;head;
+    List_node *curr = list-&gt;head;
     List_node *next = 0;
     List_node *prev = 0;
 
-    while(cur)
+    while(curr)
     {
-        next = cur-&gt;next;
-        cur-&gt;next = prev;
-        prev = cur;
-        cur = next;
+        next = curr-&gt;next;
+        curr-&gt;next = prev;
+        prev = curr;
+        curr = next;
     }
+
     list-&gt;head = prev;
 }
 </code></pre>
 
 <h3 id="recursive">Recursive</h3>
 
-<pre><code class="language-c">List_node *List_do_recur_reverse(List_node *head)
+<ul>
+  <li>Set the <strong>stop</strong> condition</li>
+  <li><strong>Recurse</strong> with tail</li>
+  <li><strong>Apply</strong> the change (make the next node point to head)</li>
+  <li><strong>Return</strong> the head</li>
+</ul>
+
+<pre><code class="language-cpp">List_node *List_do_reverse(List_node *head)
 {
     if (head == NULL || head-&gt;next == NULL)
     {
         return head;
     }
 
-    List_node *reversed_list_head = List_do_recur_reverse(head-&gt;next);
+    List_node *reversed_list_head = List_do_reverse(head-&gt;next);
     head-&gt;next-&gt;next = head;
     head-&gt;next = 0;
     return reversed_list_head;
 }
 
-void List_recur_reverse(List *list)
+void List_reverse_recursive(List *list)
 {
-    list-&gt;head = List_do_recur_reverse(list-&gt;head);
+    list-&gt;head = List_do_reverse(list-&gt;head);
 }
 </code></pre>
 
@@ -426,8 +441,8 @@ function n(n,t,e){n.addEventListener?n.addEventListener(t,e):n.attachEvent("on"+
 },{}],"eoMl":[function(require,module,exports) {
 "use strict";var e=u(require("./wrapify")),d=u(require("dom101/add-class")),t=u(require("dom101/on"));function u(e){return e&&e.__esModule?e:{default:e}}var a,o=document.querySelector("[data-js-main-body]");function r(){a||((0,d.default)(document.documentElement,"LoadDone"),a=!0)}o&&((0,e.default)(o),(0,d.default)(o,"-wrapified")),(0,t.default)(window,"load",r),setTimeout(r,5e3);
 },{"./wrapify":"hE9p","dom101/add-class":"G20n","dom101/on":"DJ2P"}]},{},["eoMl"], null)</script>
-<script src='./assets/packed/app.js?t=20210105080046'></script>
-<script src='https://cdn.jsdelivr.net/npm/prismjs@1.6.0/components/prism-c.min.js'></script>
+<script src='./assets/packed/app.js?t=20210211225109'></script>
+<script src='https://cdn.jsdelivr.net/npm/prismjs@1.6.0/components/prism-cpp.min.js'></script>
 
 
 </body>
