@@ -3,6 +3,7 @@
 
 {% assign featured_pages = site.pages
   | where_exp: "page", "page.tags contains 'Featured'"
+  | sort: "weight"
 %}
 {% assign recent_pages = site.pages
   | where_exp: "page", "page.updated"

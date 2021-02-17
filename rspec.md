@@ -1,9 +1,9 @@
 ---
 title: Rspec
 category: Ruby
-tags: [Featured, WIP]
+tags: [WIP]
 updated: 2020-12-30
-weight: -1
+weight: -3
 ---
 
 Tags
