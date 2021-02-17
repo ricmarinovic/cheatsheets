@@ -89,11 +89,11 @@
 <!-- deferred css -->
 <script id='deferred-css'>;(function(links){(requestAnimationFrame||mozRequestAnimationFrame||webkitRequestAnimationFrame||msRequestAnimationFrame||(function(fn){window.addEventListener('load',fn)}))(function(){var h=document.getElementsByTagName('head')[0],l,i;for (i=0;i<links.length;i++){l=document.createElement('link');l.rel='stylesheet';l.href=links[i];h.appendChild(l);}})})([
 'https://fonts.googleapis.com/css?family=Cousine',
-'./assets/2017/style.css?t=20210211225109'
+'./assets/2017/style.css?t=20210217211639'
 ])</script>
 <noscript id='deferred-css-fallback'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Cousine'>
-<link rel='stylesheet' href='./assets/2017/style.css?t=20210211225109'>
+<link rel='stylesheet' href='./assets/2017/style.css?t=20210217211639'>
 </noscript>
 
 <script type='application/ld+json'>
@@ -189,14 +189,26 @@
   <main class='post-content MarkdownBody' data-js-main-body data-js-anchors role='main'>
     <h2 id="intro">Intro</h2>
 
-<p>Running a container from an image:</p>
+<h3 id="lists-running-containers">Lists running containers</h3>
+
+<pre><code class="language-shell">docker ps
+</code></pre>
+
+<h4 id="options">Options</h4>
+
+<ul>
+  <li><code>-a,</code> <code>--</code><code>all</code> lists all containers (even those not currently running).</li>
+  <li><code>-l,</code> <code>--</code><code>latest</code> show the latest created container.</li>
+</ul>
+
+<h3 id="running-a-container-from-an-image">Running a container from an image</h3>
 
 <pre><code class="language-shell">docker run &lt;image name&gt; &lt;command&gt;
 </code></pre>
 
-<p>where <code>&lt;command&gt;</code> optionally overrides the default command defined on the image.</p>
+<p><code>&lt;command&gt;</code> optionally overrides the default command defined on the image.</p>
 
-<h4 id="options">Options</h4>
+<h4 id="options-1">Options</h4>
 
 <ul>
   <li><code>-p</code>, <code>--publish list</code> publish container’s ports to the host.
@@ -213,6 +225,178 @@
       <li>If <code>local_path</code> is not provided, it will not be mapped.</li>
     </ul>
   </li>
+</ul>
+
+<p>Docker <code>run</code> is a combination of <code>create</code> and <code>start</code>.</p>
+
+<pre><code class="language-shell"># Returns a `pid`
+docker create &lt;image name&gt;
+</code></pre>
+
+<pre><code class="language-shell">docker start &lt;pid&gt;
+</code></pre>
+
+<h4 id="options-2">Options</h4>
+
+<ul>
+  <li><code>-a,</code> <code>--</code><code>attach</code> shows outputs from container.</li>
+</ul>
+
+<h3 id="execute-command-in-a-running-container">Execute command in a running container</h3>
+
+<pre><code class="language-shell">docker exec -it &lt;pid&gt; &lt;command&gt;
+</code></pre>
+
+<h4 id="options-3">Options</h4>
+
+<ul>
+  <li><code>-i,</code> <code>--</code><code>interactive</code> keep Input open.</li>
+  <li><code>-t,</code> <code>--</code><code>tty</code> allocate a pseudo-TTY.</li>
+</ul>
+
+<h3 id="get-logs-from-a-container">Get logs from a container</h3>
+
+<pre><code class="language-shell">docker logs &lt;pid&gt;
+</code></pre>
+
+<h3 id="stop-containers">Stop containers</h3>
+
+<p>Send SIGTERM to process:</p>
+
+<pre><code>docker stop &lt;pid&gt;
+</code></pre>
+
+<p>Send SIGKILL to process:</p>
+
+<pre><code>docker kill &lt;pid&gt;
+</code></pre>
+
+<p>Remove a docker container with conflicting names</p>
+
+<pre><code>docker rm &lt;container name&gt;
+</code></pre>
+
+<h3 id="delete-containers">Delete containers</h3>
+
+<pre><code class="language-shell">docker system prune
+</code></pre>
+
+<p>Remove all stopped containers, dangling images, build cache and networks not used by at least one container:</p>
+
+<p>Returns the <code>pid</code> of deleted containers and shows total reclaimed space.</p>
+
+<h2 id="create-a-dockerfile">Create a Dockerfile</h2>
+
+<p>On a file simply named <code>Dockerfile</code>:</p>
+
+<pre><code class="language-dockerfile"># Use an existing docker image as a base
+FROM alpine
+# Donwload and install a dependency
+RUN apk add --update redis
+# Tell the image what to do when it starts as a container
+CMD ["redis-server"]
+</code></pre>
+
+<h3 id="build-a-docker-image-from-the-dockerfile">Build a docker image from the Dockerfile</h3>
+
+<pre><code class="language-shell">docker build &lt;directory&gt;
+</code></pre>
+
+<p>Returns a <code>pid</code>.</p>
+
+<h4 id="options-4">Options</h4>
+
+<ul>
+  <li><code>-t,</code> <code>--</code><code>tag list</code> Name <code>list</code> in the format <code>name:tag</code>.
+    <ul>
+      <li><code>&lt;docker id&gt;/&lt;project name&gt;:&lt;version&gt;</code>.</li>
+      <li>Example: <code>docker build -t stephengrider/redis:latest redis-server</code>.</li>
+      <li>Then run with <code>docker run stephengrider/redis</code>.</li>
+    </ul>
+  </li>
+  <li><code>-f,</code> <code>--</code><code>file name</code> Name of the Dockerfile (default is <code>PATH/Dockerfile</code>).</li>
+</ul>
+
+<h3 id="list-all-docker-images-on-the-machine">List all docker images on the machine</h3>
+
+<pre><code>docker image ls
+</code></pre>
+
+<h3 id="run-the-docker-image">Run the docker image</h3>
+
+<pre><code>docker run &lt;pid&gt;
+</code></pre>
+
+<h3 id="create-an-image-from-a-running-container-example">Create an image from a running container example</h3>
+
+<pre><code class="language-shell">docker run -it alpine sh
+docker ps # check the pid for the running container
+docker commit -c 'CMD ["redis-server"]' &lt;pid&gt;
+docker run &lt;pid&gt;
+</code></pre>
+
+<h3 id="dockerfile-commands">Dockerfile commands</h3>
+
+<p>Copy files from local to container:</p>
+
+<pre><code>COPY &lt;path relative to build context&gt; &lt;path on container&gt;
+</code></pre>
+
+<p>Any following comand will be executed relative to this path in the container:</p>
+
+<pre><code>WORKDIR &lt;path&gt;
+
+EXPOSE &lt;port number&gt;
+
+VOLUME &lt;container path&gt;
+</code></pre>
+
+<h2 id="docker-compose">Docker Compose</h2>
+
+<p>On a file named <code>docker-compose.yml</code>:</p>
+
+<pre><code class="language-yaml">version: '3'
+services:
+    web:
+    container_name: web
+    build:
+        context: .
+        dockerfile: Dockerfile.dev
+    restart: on-failure
+    ports:
+        - "3000:3000"
+    volumes:
+        - /app/node_modules
+        - .:/app
+        command: ["yarn", "test"]
+</code></pre>
+
+<h3 id="docker-compose-commands">Docker Compose commands</h3>
+
+<p>Run all services:</p>
+
+<pre><code class="language-shell">docker-compose up
+</code></pre>
+
+<h4 id="options-5">Options</h4>
+
+<ul>
+  <li><code>--build</code> build images before starting containers.</li>
+  <li><code>-d, -detach</code> Run containers in background, print new container names.</li>
+</ul>
+
+<p>Stop and remove containers, networks, images, and volumes:</p>
+
+<pre><code class="language-shell">docker-compose down
+</code></pre>
+
+<h3 id="restart-policies">Restart policies</h3>
+
+<ul>
+  <li><code>"</code><code>no</code><code>"</code></li>
+  <li><code>always</code></li>
+  <li><code>on-failure</code> only restart if the container exists with an error code.</li>
+  <li><code>unless-stopped</code> always restart unless forced with <code>docker stop</code>.</li>
 </ul>
 
   </main>
@@ -239,7 +423,7 @@
       
         
         
-        placeholder='Search 18+ cheatsheets'
+        placeholder='Search 20+ cheatsheets'
       >
   </label>
 </form>
@@ -264,7 +448,7 @@
             <i class='icon'></i>
 
             <span class='description'>
-              Over 18 curated cheatsheets, by developers for developers.
+              Over 20 curated cheatsheets, by developers for developers.
             </span>
 
             <span class='push-button -dark'>
@@ -310,8 +494,24 @@
             
               
                 <li class='item related-post-item'>
-  <a href='./git'>
-    <strong>Git</strong>
+  <a href='./elixir'>
+    <strong>Elixir</strong>
+    <span>
+      cheatsheet
+
+      
+      <abbr class='attribute-peg -new-layout hint--bottom' data-hint='New layout!'><span></span></abbr>
+      
+    </span>
+  </a>
+</li>
+
+              
+            
+              
+                <li class='item related-post-item'>
+  <a href='./phoenix'>
+    <strong>Phoenix framework</strong>
     <span>
       cheatsheet
 
@@ -358,8 +558,8 @@
             
               
                 <li class='item related-post-item'>
-  <a href='./c'>
-    <strong>C language</strong>
+  <a href='./git'>
+    <strong>Git</strong>
     <span>
       cheatsheet
 
@@ -374,24 +574,8 @@
             
               
                 <li class='item related-post-item'>
-  <a href='./gdb'>
-    <strong>GDB</strong>
-    <span>
-      cheatsheet
-
-      
-      <abbr class='attribute-peg -new-layout hint--bottom' data-hint='New layout!'><span></span></abbr>
-      
-    </span>
-  </a>
-</li>
-
-              
-            
-              
-                <li class='item related-post-item'>
-  <a href='./rust'>
-    <strong>Rust</strong>
+  <a href='./rspec'>
+    <strong>Rspec</strong>
     <span>
       cheatsheet
 
@@ -426,8 +610,8 @@ function n(n,t,e){n.addEventListener?n.addEventListener(t,e):n.attachEvent("on"+
 },{}],"eoMl":[function(require,module,exports) {
 "use strict";var e=u(require("./wrapify")),d=u(require("dom101/add-class")),t=u(require("dom101/on"));function u(e){return e&&e.__esModule?e:{default:e}}var a,o=document.querySelector("[data-js-main-body]");function r(){a||((0,d.default)(document.documentElement,"LoadDone"),a=!0)}o&&((0,e.default)(o),(0,d.default)(o,"-wrapified")),(0,t.default)(window,"load",r),setTimeout(r,5e3);
 },{"./wrapify":"hE9p","dom101/add-class":"G20n","dom101/on":"DJ2P"}]},{},["eoMl"], null)</script>
-<script src='./assets/packed/app.js?t=20210211225109'></script>
-
+<script src='./assets/packed/app.js?t=20210217211639'></script>
+<script src='https://cdn.jsdelivr.net/npm/prismjs@1.6.0/components/prism-docker.min.js'></script>
 
 
 </body>
