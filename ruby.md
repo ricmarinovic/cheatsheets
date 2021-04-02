@@ -17,3 +17,7 @@ Time.now.utc.to_formatted_s(:number)  # using Rails
 Time.now.utc.strftime("%Y%m%d%H%M%S") # using Ruby
 ```
 
+Ransack
+-------------------------------------
+
+- [Ransack basic searching](https://github.com/activerecord-hackery/ransack/wiki/Basic-Searching)

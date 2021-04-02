@@ -176,6 +176,11 @@ This command will create the following files:
 | `--no-context` | |
 | `--no-schema` | |
 
+Dynamic Forms
+-------------------------------------
+
+- [Dynamic Forms with Phoenix](https://blog.plataformatec.com.br/2016/09/dynamic-forms-with-phoenix/)
+
 Resources
 -------------------------------------
 
