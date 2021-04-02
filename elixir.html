@@ -91,11 +91,11 @@
 <!-- deferred css -->
 <script id='deferred-css'>;(function(links){(requestAnimationFrame||mozRequestAnimationFrame||webkitRequestAnimationFrame||msRequestAnimationFrame||(function(fn){window.addEventListener('load',fn)}))(function(){var h=document.getElementsByTagName('head')[0],l,i;for (i=0;i<links.length;i++){l=document.createElement('link');l.rel='stylesheet';l.href=links[i];h.appendChild(l);}})})([
 'https://fonts.googleapis.com/css?family=Cousine',
-'./assets/2017/style.css?t=20210217211639'
+'./assets/2017/style.css?t=20210402195747'
 ])</script>
 <noscript id='deferred-css-fallback'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Cousine'>
-<link rel='stylesheet' href='./assets/2017/style.css?t=20210217211639'>
+<link rel='stylesheet' href='./assets/2017/style.css?t=20210402195747'>
 </noscript>
 
 <script type='application/ld+json'>
@@ -191,17 +191,44 @@
   <main class='post-content MarkdownBody' data-js-main-body data-js-anchors role='main'>
     <h2 id="intro">Intro</h2>
 
+<h2 id="mix">Mix</h2>
+
+<pre><code>mix help --search phx
+</code></pre>
+
+<h2 id="strings">Strings</h2>
+
+<h3 id="using-iolists">Using IOLists</h3>
+
+<pre><code class="language-elixir">list = ["abc", "def"]
+IO.iodata_to_binary(list)
+#=&gt; "abcdef"
+</code></pre>
+
+<ul>
+  <li><a href="https://www.bignerdranch.com/blog/elixir-and-io-lists-part-1-building-output-efficiently/">Elixir and IO Lists</a></li>
+  <li><a href="https://www.evanmiller.org/elixir-ram-and-the-template-of-doom.html">Elixir RAM and the Template of Doom</a></li>
+  <li><a href="https://medium.com/@mentels/a-short-guide-to-refc-binaries-f13f9029f6e2">A short guide to refc binaries</a></li>
+</ul>
+
 <h2 id="gettext">Gettext</h2>
 
-<p><a href="https://hexdocs.pm/gettext/Gettext.html">Documentation</a></p>
-
-<h2 id="dynamic-forms">Dynamic Forms</h2>
-
-<p><a href="https://blog.plataformatec.com.br/2016/09/dynamic-forms-with-phoenix/">Dynamic Forms with Phoenix</a></p>
+<ul>
+  <li><a href="https://hexdocs.pm/gettext/Gettext.html">Documentation</a></li>
+  <li><a href="https://blog.plataformatec.com.br/2016/03/using-gettext-to-internationalize-a-phoenix-application/">Using Gettext to internationalize a Phoenix application</a></li>
+</ul>
 
 <h2 id="releases">Releases</h2>
 
-<p><a href="https://hexdocs.pm/mix/Mix.Tasks.Release.html">Documentation</a></p>
+<ul>
+  <li><a href="https://hexdocs.pm/mix/Mix.Tasks.Release.html">Documentation</a></li>
+</ul>
+
+<h2 id="deployment">Deployment</h2>
+
+<ul>
+  <li><a href="https://blog.plataformatec.com.br/2019/10/kubernetes-and-the-erlang-vm-orchestration-on-the-large-and-the-small/">Kubernetes and the Erlang VM: orchestration on the large and the small</a></li>
+</ul>
 
   </main>
 </div>
@@ -227,7 +254,7 @@
       
         
         
-        placeholder='Search 20+ cheatsheets'
+        placeholder='Search 23+ cheatsheets'
       >
   </label>
 </form>
@@ -252,7 +279,7 @@
             <i class='icon'></i>
 
             <span class='description'>
-              Over 20 curated cheatsheets, by developers for developers.
+              Over 23 curated cheatsheets, by developers for developers.
             </span>
 
             <span class='push-button -dark'>
@@ -274,6 +301,38 @@
                 <li class='item related-post-item'>
   <a href='./phoenix'>
     <strong>Phoenix framework</strong>
+    <span>
+      cheatsheet
+
+      
+      <abbr class='attribute-peg -new-layout hint--bottom' data-hint='New layout!'><span></span></abbr>
+      
+    </span>
+  </a>
+</li>
+
+              
+            
+              
+                <li class='item related-post-item'>
+  <a href='./ecto'>
+    <strong>Ecto</strong>
+    <span>
+      cheatsheet
+
+      
+      <abbr class='attribute-peg -new-layout hint--bottom' data-hint='New layout!'><span></span></abbr>
+      
+    </span>
+  </a>
+</li>
+
+              
+            
+              
+                <li class='item related-post-item'>
+  <a href='./liveview'>
+    <strong>Phoenix LiveView</strong>
     <span>
       cheatsheet
 
@@ -346,6 +405,22 @@
             
               
                 <li class='item related-post-item'>
+  <a href='./ecto'>
+    <strong>Ecto</strong>
+    <span>
+      cheatsheet
+
+      
+      <abbr class='attribute-peg -new-layout hint--bottom' data-hint='New layout!'><span></span></abbr>
+      
+    </span>
+  </a>
+</li>
+
+              
+            
+              
+                <li class='item related-post-item'>
   <a href='./git'>
     <strong>Git</strong>
     <span>
@@ -362,24 +437,8 @@
             
               
                 <li class='item related-post-item'>
-  <a href='./rspec'>
-    <strong>Rspec</strong>
-    <span>
-      cheatsheet
-
-      
-      <abbr class='attribute-peg -new-layout hint--bottom' data-hint='New layout!'><span></span></abbr>
-      
-    </span>
-  </a>
-</li>
-
-              
-            
-              
-                <li class='item related-post-item'>
-  <a href='./gdb'>
-    <strong>GDB</strong>
+  <a href='./liveview'>
+    <strong>Phoenix LiveView</strong>
     <span>
       cheatsheet
 
@@ -414,7 +473,7 @@ function n(n,t,e){n.addEventListener?n.addEventListener(t,e):n.attachEvent("on"+
 },{}],"eoMl":[function(require,module,exports) {
 "use strict";var e=u(require("./wrapify")),d=u(require("dom101/add-class")),t=u(require("dom101/on"));function u(e){return e&&e.__esModule?e:{default:e}}var a,o=document.querySelector("[data-js-main-body]");function r(){a||((0,d.default)(document.documentElement,"LoadDone"),a=!0)}o&&((0,e.default)(o),(0,d.default)(o,"-wrapified")),(0,t.default)(window,"load",r),setTimeout(r,5e3);
 },{"./wrapify":"hE9p","dom101/add-class":"G20n","dom101/on":"DJ2P"}]},{},["eoMl"], null)</script>
-<script src='./assets/packed/app.js?t=20210217211639'></script>
+<script src='./assets/packed/app.js?t=20210402195747'></script>
 
 
 
