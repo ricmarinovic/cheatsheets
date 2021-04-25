@@ -91,11 +91,11 @@
 <!-- deferred css -->
 <script id='deferred-css'>;(function(links){(requestAnimationFrame||mozRequestAnimationFrame||webkitRequestAnimationFrame||msRequestAnimationFrame||(function(fn){window.addEventListener('load',fn)}))(function(){var h=document.getElementsByTagName('head')[0],l,i;for (i=0;i<links.length;i++){l=document.createElement('link');l.rel='stylesheet';l.href=links[i];h.appendChild(l);}})})([
 'https://fonts.googleapis.com/css?family=Cousine',
-'./assets/2017/style.css?t=20210402195747'
+'./assets/2017/style.css?t=20210425213133'
 ])</script>
 <noscript id='deferred-css-fallback'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Cousine'>
-<link rel='stylesheet' href='./assets/2017/style.css?t=20210402195747'>
+<link rel='stylesheet' href='./assets/2017/style.css?t=20210425213133'>
 </noscript>
 
 <script type='application/ld+json'>
@@ -191,12 +191,124 @@
   <main class='post-content MarkdownBody' data-js-main-body data-js-anchors role='main'>
     <h2 id="intro">Intro</h2>
 
-<h2 id="mix">Mix</h2>
+<h2 id="control-flow">Control flow</h2>
 
-<pre><code>mix help --search phx
+<h3 id="comprehensions">Comprehensions</h3>
+
+<pre><code class="language-elixir">for x &lt;- [1, 2, 3], y &lt;- [2, 3, 4], rem(y, 2) == 0 do
+  x * y
+end
+#=&gt; [2, 4, 4, 8, 6, 12]
+</code></pre>
+
+<pre><code class="language-elixir">for &lt;&lt;r::8, g::8, b::8 &lt;- pixels&gt;&gt;, do: {r, g, b}
+</code></pre>
+
+<h4 id="into">into</h4>
+
+<pre><code class="language-elixir">for &lt;&lt;c &lt;- " hello world "&gt;&gt;, c != ?\s, into: "", do: &lt;&lt;c&gt;&gt;
+#=&gt; "helloworld"
+</code></pre>
+
+<h4 id="uniq">uniq</h4>
+
+<pre><code class="language-elixir">for x &lt;- [1, 1, 2, 3], uniq: true, do: x * 2
+#=&gt; [2, 4, 6]
+</code></pre>
+
+<h4 id="reduce">reduce</h4>
+
+<pre><code class="language-elixir">for &lt;&lt;x &lt;- "AbCabCABc"&gt;&gt;, x in ?a..?z, reduce: %{} do
+  acc -&gt; Map.update(acc, &lt;&lt;x&gt;&gt;, 1, &amp; &amp;1 + 1)
+end
+#=&gt; %{"a" =&gt; 1, "b" =&gt; 2, "c" =&gt; 1}
+</code></pre>
+
+<h3 id="with"><code>with</code></h3>
+
+<pre><code class="language-elixir">with {:ok, map} &lt;- do_something do
+  on_success
+end
+</code></pre>
+
+<h2 id="enum">Enum</h2>
+
+<h2 id="stream">Stream</h2>
+
+<h3 id="cycle">cycle</h3>
+
+<pre><code class="language-elixir">Stream.cycle([1, 2, 3])
+|&gt; Enum.take(5)
+#=&gt; [1, 2, 3, 4, 5]
+</code></pre>
+
+<h3 id="repeatedly">repeatedly</h3>
+
+<pre><code class="language-elixir">Stream.repeatedly(&amp;:rand.uniform/0)
+|&gt; Enum.take(3)
+#=&gt; [0.6148287886796542, 0.3662689171313852, 0.6596815231166095]
+</code></pre>
+
+<h3 id="iterate">iterate</h3>
+
+<pre><code class="language-elixir">Stream.iterate(0, &amp;(&amp;1 + 1))
+|&gt; Enum.take(5)
+#=&gt; [0, 1, 2, 3, 4]
+</code></pre>
+
+<h3 id="unfold">unfold</h3>
+
+<pre><code class="language-elixir">Stream.unfold(5, fn
+  0 -&gt; nil
+  n -&gt; {n, n - 1}
+end) |&gt; Enum.to_list()
+#=&gt;[5, 4, 3, 2, 1]
+Stream.unfold({0, 1}, fn {f1, f2} -&gt; {f1, {f2, f1 + f2}} end) |&gt; Enum.take(7)
+#=&gt; [0, 1, 1, 2, 3, 5, 8]
+</code></pre>
+
+<h3 id="resource">resource</h3>
+
+<pre><code class="language-elixir">Stream.resource(
+  fn -&gt; File.open!("sample") end,
+  fn file -&gt;
+    case IO.read(file, :line) do
+      data when is_binary(data) -&gt; {[data], file}
+      _ -&gt; {:halt, file}
+    end,
+    fn file -&gt; File.close(file) end
+)
 </code></pre>
 
 <h2 id="strings">Strings</h2>
+
+<h3 id="binaries">Binaries</h3>
+
+<pre><code class="language-elixir">&lt;&lt; 12.3::big-signed-float-size(32) &gt;&gt;
+&lt;&lt; a::binary-size(32) &gt;&gt;
+</code></pre>
+
+<h4 id="options">Options</h4>
+
+<ul>
+  <li>binary</li>
+  <li>bitstring</li>
+  <li>bits</li>
+  <li>bytes</li>
+  <li>float</li>
+  <li>integer</li>
+  <li>utf8</li>
+  <li>utf16</li>
+  <li>utf32</li>
+</ul>
+
+<h4 id="qualifiers">Qualifiers</h4>
+
+<ul>
+  <li><code>size(n)</code> (in bits)</li>
+  <li><code>signed</code> or <code>unsigned</code></li>
+  <li>endianess: <code>big</code>, <code>little</code> or <code>native</code></li>
+</ul>
 
 <h3 id="using-iolists">Using IOLists</h3>
 
@@ -217,6 +329,64 @@ IO.iodata_to_binary(list)
   <li><a href="https://hexdocs.pm/gettext/Gettext.html">Documentation</a></li>
   <li><a href="https://blog.plataformatec.com.br/2016/03/using-gettext-to-internationalize-a-phoenix-application/">Using Gettext to internationalize a Phoenix application</a></li>
 </ul>
+
+<h2 id="debugging">Debugging</h2>
+
+<h3 id="pry">pry</h3>
+
+<pre><code class="language-elixir">require IEx; IEx.pry
+</code></pre>
+
+<h3 id="breakpoints">breakpoints</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">command</th>
+      <th style="text-align: left">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">binding</td>
+      <td style="text-align: left">shows all variables in scope</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">break!(fun)</td>
+      <td style="text-align: left">define a new breakpoint for <code>Mod.fun/arity</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">breaks</td>
+      <td style="text-align: left">prints all breakpoints and their IDs</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">continue</td>
+      <td style="text-align: left">continue the code execution</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">respawn</td>
+      <td style="text-align: left">starts a new shell</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">whereami</td>
+      <td style="text-align: left">show the file name, line and the code being executed</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="random-numbers">Random Numbers</h2>
+
+<h2 id="timer">Timer</h2>
+
+<pre><code class="language-elixir">:timer.send_interval(time, message)
+</code></pre>
+
+<pre><code class="language-elixir">:timer.send_after(time, message)
+</code></pre>
+
+<pre><code class="language-elixir">:timer.sleep(time)
+Process.sleep(time)
+</code></pre>
 
 <h2 id="releases">Releases</h2>
 
@@ -254,7 +424,7 @@ IO.iodata_to_binary(list)
       
         
         
-        placeholder='Search 23+ cheatsheets'
+        placeholder='Search 24+ cheatsheets'
       >
   </label>
 </form>
@@ -279,7 +449,7 @@ IO.iodata_to_binary(list)
             <i class='icon'></i>
 
             <span class='description'>
-              Over 23 curated cheatsheets, by developers for developers.
+              Over 24 curated cheatsheets, by developers for developers.
             </span>
 
             <span class='push-button -dark'>
@@ -301,6 +471,22 @@ IO.iodata_to_binary(list)
                 <li class='item related-post-item'>
   <a href='./phoenix'>
     <strong>Phoenix framework</strong>
+    <span>
+      cheatsheet
+
+      
+      <abbr class='attribute-peg -new-layout hint--bottom' data-hint='New layout!'><span></span></abbr>
+      
+    </span>
+  </a>
+</li>
+
+              
+            
+              
+                <li class='item related-post-item'>
+  <a href='./otp'>
+    <strong>OTP</strong>
     <span>
       cheatsheet
 
@@ -389,6 +575,22 @@ IO.iodata_to_binary(list)
             
               
                 <li class='item related-post-item'>
+  <a href='./otp'>
+    <strong>OTP</strong>
+    <span>
+      cheatsheet
+
+      
+      <abbr class='attribute-peg -new-layout hint--bottom' data-hint='New layout!'><span></span></abbr>
+      
+    </span>
+  </a>
+</li>
+
+              
+            
+              
+                <li class='item related-post-item'>
   <a href='./ruby'>
     <strong>Ruby</strong>
     <span>
@@ -435,22 +637,6 @@ IO.iodata_to_binary(list)
 
               
             
-              
-                <li class='item related-post-item'>
-  <a href='./liveview'>
-    <strong>Phoenix LiveView</strong>
-    <span>
-      cheatsheet
-
-      
-      <abbr class='attribute-peg -new-layout hint--bottom' data-hint='New layout!'><span></span></abbr>
-      
-    </span>
-  </a>
-</li>
-
-              
-            
           </ul>
         </div>
       </div>
@@ -473,7 +659,7 @@ function n(n,t,e){n.addEventListener?n.addEventListener(t,e):n.attachEvent("on"+
 },{}],"eoMl":[function(require,module,exports) {
 "use strict";var e=u(require("./wrapify")),d=u(require("dom101/add-class")),t=u(require("dom101/on"));function u(e){return e&&e.__esModule?e:{default:e}}var a,o=document.querySelector("[data-js-main-body]");function r(){a||((0,d.default)(document.documentElement,"LoadDone"),a=!0)}o&&((0,e.default)(o),(0,d.default)(o,"-wrapified")),(0,t.default)(window,"load",r),setTimeout(r,5e3);
 },{"./wrapify":"hE9p","dom101/add-class":"G20n","dom101/on":"DJ2P"}]},{},["eoMl"], null)</script>
-<script src='./assets/packed/app.js?t=20210402195747'></script>
+<script src='./assets/packed/app.js?t=20210425213133'></script>
 
 
 
